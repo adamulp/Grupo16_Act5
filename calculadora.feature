@@ -1,9 +1,9 @@
 Feature: Calculadora
 
   Scenario Outline: Realizar operaciones matemáticas básicas
-    Dado que tengo un calculadora
-    Cuando sumo <numero1> y <numero2>
-    Entonces el resultado debe ser <resultado>
+    Given that tengo un calculadora
+    When sumo <numero1> y <numero2>
+    Then el resultado debe ser <resultado>
 
     Examples:
       | numero1 | numero2 | resultado |
@@ -12,9 +12,9 @@ Feature: Calculadora
       | 0      | 0       | 0         |
 
   Scenario Outline: Probar resta
-    Dado que tengo un calculadora
-    Cuando resto <numero1> de <numero2>
-    Entonces el resultado debe ser <resultado>
+    Given that tengo un calculadora
+    When resto <numero1> de <numero2>
+    Then el resultado debe ser <resultado>
 
     Examples:
       | numero1 | numero2 | resultado |
@@ -24,30 +24,30 @@ Feature: Calculadora
 
   Scenario: Inicializar calculadora y mostrar mensaje de bienvenida
     @BeforeClass
-    Dado que inicializo el calculadora
-    Entonces debería ver el mensaje "Bienvenido al calculadora"
+    Given that inicializo el calculadora
+    Then debería ver el mensaje "Bienvenido al calculadora"
 
   Scenario: Mensaje antes de cada operación
     @Before
-    Dado que voy a realizar una operación
-    Cuando uso System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName())
-    Entonces debería ver el nombre del método en consola
+    Given that voy a realizar una operación
+    When uso System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName())
+    Then debería ver el nombre del método en consola
 
   Scenario: Mensaje después de cada operación
     @After
-    Dado que he terminado de probar una operación
-    Entonces debería ver el mensaje "Prueba finalizada, campos en 0"
+    Given that he terminado de probar una operación
+    Then debería ver el mensaje "Prueba finalizada, campos en 0"
 
   Scenario: Mensaje al finalizar todas las operaciones
     @AfterClass
-    Dado que todas las operaciones han finalizado
-    Entonces debería ver el mensaje "La operación ha finalizado"
+    Given that todas las operaciones han finalizado
+    Then debería ver el mensaje "La operación ha finalizado"
 
   Scenario: Probar división por cero
     @Test(expected = ArithmeticException.class)
-    Dado que tengo un calculadora
-    Cuando intento dividir <numerador> entre <denominador>
-    Entonces debería lanzar una ArithmeticException
+    Given that tengo un calculadora
+    When intento dividir <numerador> entre <denominador>
+    Then debería lanzar una ArithmeticException
 
     Examples:
       | numerador | denominador |
@@ -56,9 +56,9 @@ Feature: Calculadora
 
   Scenario Outline: Prueba parametrizada para suma
     @RunWith(Parameterized.class)
-    Dado que tengo un calculadora
-    Cuando sumo <numero1> y <numero2>
-    Entonces el resultado debe ser <resultado>
+    Given that tengo un calculadora
+    When sumo <numero1> y <numero2>
+    Then el resultado debe ser <resultado>
 
     Examples:
       | numero1 | numero2 | resultado |
@@ -74,4 +74,4 @@ Feature: Calculadora
       calculadoraTest.class,
       divisionTest.class
     })
-    Entonces debería ejecutar todos los tests en orden
+    Then debería ejecutar todos los tests en orden
