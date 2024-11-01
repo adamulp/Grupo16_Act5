@@ -24,62 +24,70 @@ public class CalculadorGUI extends JFrame {
     private void createUI() {
         setTitle("Calculadora");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(5, 2));
-
-        // Input fields
-        input1 = new JTextField();
-        input2 = new JTextField();
-        resultField = new JTextField();
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        input1 = new JTextField(10);
+        input2 = new JTextField(10);
+        resultField = new JTextField(10);
         resultField.setEditable(false);
 
-        // Buttons
         JButton sumButton = new JButton("Sumar");
         JButton subtractButton = new JButton("Restar");
         JButton multiplyButton = new JButton("Multiplicar");
         JButton divideButton = new JButton("Dividir");
+        JButton clearButton = new JButton("Limpiar Campos");
 
-        // Add action listeners for buttons
-        sumButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performOperation("sumar");
-            }
-        });
+        sumButton.addActionListener(e -> performOperation("sumar"));
+        subtractButton.addActionListener(e -> performOperation("restar"));
+        multiplyButton.addActionListener(e -> performOperation("multiplicar"));
+        divideButton.addActionListener(e -> performOperation("dividir"));
 
-        subtractButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performOperation("restar");
-            }
-        });
+        clearButton.addActionListener(e -> clearFields());
 
-        multiplyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performOperation("multiplicar");
-            }
-        });
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(new JLabel("Valor A:"), gbc);
+        
+        gbc.gridx = 1;
+        add(input1, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(new JLabel("Valor B:"), gbc);
+        
+        gbc.gridx = 1;
+        add(input2, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(new JLabel("Resultado:"), gbc);
+        
+        gbc.gridx = 1;
+        add(resultField, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(sumButton, gbc);
+        
+        gbc.gridx = 1;
+        add(subtractButton, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(multiplyButton, gbc);
+        
+        gbc.gridx = 1;
+        add(divideButton, gbc);
 
-        divideButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performOperation("dividir");
-            }
-        });
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        add(clearButton, gbc);
 
-        // Add components to the frame
-        add(new JLabel("Número 1:"));
-        add(input1);
-        add(new JLabel("Número 2:"));
-        add(input2);
-        add(new JLabel("Resultado:"));
-        add(resultField);
-        add(sumButton);
-        add(subtractButton);
-        add(multiplyButton);
-        add(divideButton);
-
-        setSize(300, 200);
+        setSize(300, 250);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -117,8 +125,13 @@ public class CalculadorGUI extends JFrame {
         }
     }
 
+    private void clearFields() {
+        input1.setText("");
+        input2.setText("");
+        resultField.setText("");
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new CalculadorGUI());
+        SwingUtilities.invokeLater(CalculadorGUI::new);
     }
 }
-
