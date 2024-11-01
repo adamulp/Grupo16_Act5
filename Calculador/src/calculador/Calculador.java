@@ -6,8 +6,16 @@ package calculador;
  */
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 public class Calculador {
+    private int precision;
+    private static final int DEFAULT_PRECISION = 10;
+    
+    public Calculador(){
+        this.precision = DEFAULT_PRECISION;
+    }
+    
     public static void main(String[] args) {
         Calculador calc = new Calculador();
         BigDecimal result1 = calc.sumar(5, 10);
@@ -45,7 +53,7 @@ public class Calculador {
         if (divisor.compareTo(BigDecimal.ZERO) == 0) {
             throw new ArithmeticException("Division by zero");
         }
-        return toBigDecimal(a).divide(divisor);
+        return toBigDecimal(a).divide(divisor, this.precision, RoundingMode.HALF_UP);
     }
 
     public BigDecimal multiplicar(Number a, Number b) {
