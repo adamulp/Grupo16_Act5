@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author adam
+ * @author Grupo16
  */
 public class CalculadorTest {
     
