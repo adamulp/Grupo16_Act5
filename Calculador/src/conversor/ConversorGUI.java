@@ -9,7 +9,8 @@ public class ConversorGUI extends JFrame {
 
     private JTextField pesosArgentinos;
     private JTextField dolaresYanquis;
-    private JTextField resultField;
+    private JTextField resultARSField; // Result field for ARS
+    private JTextField resultUSDField; // Result field for USD
     private JTextField aumentarARSField; // For increasing ARS
     private JTextField aumentarUSDField; // For increasing USD
     private JTextField retirarARSField; // For withdrawing ARS
@@ -35,8 +36,10 @@ public class ConversorGUI extends JFrame {
         aumentarUSDField = new JTextField(10);
         retirarUSDField = new JTextField(10);
 
-        resultField = new JTextField(10);
-        resultField.setEditable(false);
+        resultARSField = new JTextField(10);
+        resultUSDField = new JTextField(10);
+        resultARSField.setEditable(false);
+        resultUSDField.setEditable(false);
 
         applyDocumentFilters();
 
@@ -59,6 +62,7 @@ public class ConversorGUI extends JFrame {
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // ARS Inputs
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(new JLabel("ARS:"), gbc);
@@ -80,7 +84,8 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 1;
         add(retirarARSField, gbc);
 
-        gbc.gridx = 3;
+        // USD Inputs
+        gbc.gridx = 3; // Move to the next column for USD
         gbc.gridy = 0;
         add(new JLabel("USD:"), gbc);
 
@@ -94,7 +99,6 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 4;
         add(aumentarUSDField, gbc);
 
-
         gbc.gridx = 3;
         gbc.gridy = 2;
         add(retirarUSDButton, gbc);
@@ -102,15 +106,20 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 4;
         add(retirarUSDField, gbc);
 
-
+        // Result Fields
         gbc.gridx = 0;
         gbc.gridy = 3;
-        add(new JLabel("Resultado:"), gbc);
-
+        add(new JLabel("Resultado ARS:"), gbc);
         gbc.gridx = 1;
-        add(resultField, gbc);
+        add(resultARSField, gbc);
 
+        gbc.gridx = 3;
+        gbc.gridy = 3;
+        add(new JLabel("Resultado USD:"), gbc);
+        gbc.gridx = 4;
+        add(resultUSDField, gbc);
 
+        // Other buttons
         gbc.gridx = 0;
         gbc.gridy = 4;
         add(convertirButton, gbc);
@@ -118,14 +127,15 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 1;
         add(cotizarButton, gbc);
 
+        // Clear Button
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 5;
-        gbc.gridwidth = 6;
+        gbc.gridwidth = 6; // Make it span across all columns
         add(clearButton, gbc);
 
-        setSize(800, 350);
-        setLocationRelativeTo(null);
+        setSize(800, 400); // Adjusted size for better layout
+        setLocationRelativeTo(null); // Center on screen
         setVisible(true);
     }
 
@@ -150,21 +160,25 @@ public class ConversorGUI extends JFrame {
                     String numARSStr = aumentarARSField.getText().replace(',', '.');
                     Number numARS = new BigDecimal(numARSStr);
                     result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
+                    resultARSField.setText(result.toString()); // Set result for ARS
                     break;
                 case "retirarARS":
                     String numRetirarARSStr = retirarARSField.getText().replace(',', '.');
                     Number numRetirarARS = new BigDecimal(numRetirarARSStr);
                     result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
+                    resultARSField.setText(result.toString()); // Set result for ARS
                     break;
                 case "aumentarUSD":
                     String numUSDStr = aumentarUSDField.getText().replace(',', '.');
                     Number numUSD = new BigDecimal(numUSDStr);
                     result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
+                    resultUSDField.setText(result.toString()); // Set result for USD
                     break;
                 case "retirarUSD":
                     String numRetirarUSDStr = retirarUSDField.getText().replace(',', '.');
                     Number numRetirarUSD = new BigDecimal(numRetirarUSDStr);
                     result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
+                    resultUSDField.setText(result.toString()); // Set result for USD
                     break;
                 case "convertir":
                     // Implement conversion logic here if needed
@@ -175,8 +189,6 @@ public class ConversorGUI extends JFrame {
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");
             }
-
-            resultField.setText(result.toString());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
@@ -189,7 +201,8 @@ public class ConversorGUI extends JFrame {
     private void clearFields() {
         pesosArgentinos.setText("");
         dolaresYanquis.setText("");
-        resultField.setText("");
+        resultARSField.setText("");
+        resultUSDField.setText("");
         aumentarARSField.setText("");
         aumentarUSDField.setText("");
         retirarARSField.setText("");
@@ -206,7 +219,6 @@ public class ConversorGUI extends JFrame {
     }
 
     private class NumericDocumentFilter extends DocumentFilter {
-
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (isNumeric(string)) {
