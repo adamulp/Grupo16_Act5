@@ -23,7 +23,7 @@ public class ConversorGUI extends JFrame {
     }
 
     private void createUI() {
-        setTitle("Calculadora");
+        setTitle("Conversor de Moneda");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -33,22 +33,20 @@ public class ConversorGUI extends JFrame {
         resultField = new JTextField(10);
         resultField.setEditable(false);
 
-        // Apply DocumentFilter to input fields
         ((AbstractDocument) entradaA.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         ((AbstractDocument) entradaB.getDocument()).setDocumentFilter(new NumericDocumentFilter());
 
-        // Buttons
-        JButton sumButton = new JButton("Sumar");
-        JButton subtractButton = new JButton("Restar");
-        JButton multiplyButton = new JButton("Multiplicar");
-        JButton divideButton = new JButton("Dividir");
+        JButton aumentarButton = new JButton("Aumentar");
+        JButton retirarButton = new JButton("Retirar");
+        JButton convertirButton = new JButton("Convertir");
+        JButton cotizarButton = new JButton("Cotizar");
         JButton clearButton = new JButton("Limpiar Campos");
 
         // Add action listeners for buttons
-        sumButton.addActionListener(e -> performOperation("sumar", sumButton));
-        subtractButton.addActionListener(e -> performOperation("restar", subtractButton));
-        multiplyButton.addActionListener(e -> performOperation("multiplicar", multiplyButton));
-        divideButton.addActionListener(e -> performOperation("dividir", divideButton));
+        aumentarButton.addActionListener(e -> performOperation("aumentar", aumentarButton));
+        retirarButton.addActionListener(e -> performOperation("retirar", retirarButton));
+        convertirButton.addActionListener(e -> performOperation("convertir", convertirButton));
+        cotizarButton.addActionListener(e -> performOperation("cotizar", cotizarButton));
 
         // Action listener for clear button
         clearButton.addActionListener(e -> clearFields());
@@ -78,17 +76,17 @@ public class ConversorGUI extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        add(sumButton, gbc);
+        add(aumentarButton, gbc);
 
         gbc.gridx = 1;
-        add(subtractButton, gbc);
+        add(retirarButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        add(multiplyButton, gbc);
+        add(convertirButton, gbc);
 
         gbc.gridx = 1;
-        add(divideButton, gbc);
+        add(cotizarButton, gbc);
 
         // Adding the clear button across both columns
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -115,17 +113,17 @@ public class ConversorGUI extends JFrame {
             BigDecimal result;
 
             switch (operation) {
-                case "sumar":
-                    result = conversorMoneda.sumar(num1, num2);
+                case "aumentar":
+                    result = conversorMoneda.aumentar(num1, num2);
                     break;
-                case "restar":
-                    result = conversorMoneda.restar(num1, num2);
+                case "retirar":
+                    result = conversorMoneda.retirar(num1, num2);
                     break;
-                case "multiplicar":
-                    result = conversorMoneda.multiplicar(num1, num2);
+                case "convertir":
+                    result = conversorMoneda.convertir(num1, num2);
                     break;
-                case "dividir":
-                    result = conversorMoneda.dividir(num1, num2);
+                case "cotizar":
+                    result = conversorMoneda.cotizar(num1, num2);
                     break;
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");
