@@ -14,6 +14,21 @@ public class PasosPanel extends JPanel {
     private void createUI() {
         setLayout(new BorderLayout());
 
+        // Create a panel for the title and divider
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        
+        // Create a JLabel for the title
+        JLabel titleLabel = new JLabel("Pasos", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Optional: change font size and style
+
+        // Create a JSeparator for the divider
+        JSeparator separator = new JSeparator();
+
+        // Add components to the header panel
+        headerPanel.add(titleLabel, BorderLayout.NORTH);
+        headerPanel.add(separator, BorderLayout.SOUTH);
+
         // Initialize the JTextArea for recording steps
         pasosTextArea = new JTextArea();
         pasosTextArea.setEditable(false);
@@ -23,7 +38,8 @@ public class PasosPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(400, 200)); // Set preferred size
 
-        // Add the JScrollPane to the panel
+        // Add the header panel and JScrollPane to the main panel
+        add(headerPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
 
