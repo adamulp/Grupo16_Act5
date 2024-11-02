@@ -25,3 +25,6 @@ replay_pid*
 /Calculador/nbproject/private/
 /Calculador/build/
 /conversor-monedas-ant/nbproject/private/
+/conversor-monedas-ant/build/
+/conversorMonedaMaven/target/
+/conversorMonedaMaven/nbproject/
