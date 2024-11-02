@@ -1,5 +1,6 @@
-package conversor;
+package manual;
 
+import conversor.ConversorMoneda;
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;

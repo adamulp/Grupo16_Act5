@@ -9,13 +9,13 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class ConversorMoneda {
-    private int precision;
-    private static final int DEFAULT_PRECISION = 10;
-    
-    public ConversorMoneda(){
-        this.precision = DEFAULT_PRECISION;
+    private static final int COTIZAR_SCALE = 10;
+    private static final int CONVERSION_SCALE = 3;
+
+    public ConversorMoneda() {
+        // You could have additional setup here if needed
     }
-    
+
     public static void main(String[] args) {
         ConversorMoneda calc = new ConversorMoneda();
         BigDecimal result1 = calc.aumentar(5, 10);
@@ -48,17 +48,15 @@ public class ConversorMoneda {
         return toBigDecimal(a).subtract(toBigDecimal(b));
     }
 
-    public static BigDecimal cotizar(Number a, Number b) {
+    public BigDecimal cotizar(Number a, Number b) {
         BigDecimal divisor = toBigDecimal(b);
         if (divisor.compareTo(BigDecimal.ZERO) == 0) {
             throw new ArithmeticException("Division by zero");
         }
-        return toBigDecimal(a).divide(divisor, DEFAULT_PRECISION, RoundingMode.HALF_UP);
+        return toBigDecimal(a).divide(divisor, COTIZAR_SCALE, RoundingMode.HALF_UP); // Set scale here
     }
 
-    public static BigDecimal convertir(Number a, Number b) {
-        return toBigDecimal(a).multiply(toBigDecimal(b));
+    public BigDecimal convertir(Number a, Number b) {
+        return toBigDecimal(a).multiply(toBigDecimal(b)).setScale(CONVERSION_SCALE, RoundingMode.HALF_UP); // Set scale here
     }
 }
-
-

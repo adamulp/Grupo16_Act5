@@ -1,5 +1,6 @@
-package conversor;
+package manual;
 
+import conversor.ConversorMoneda;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;

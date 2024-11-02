@@ -1,4 +1,4 @@
-package conversor;
+package manual;
 
 import javax.swing.*;
 import java.awt.*;
