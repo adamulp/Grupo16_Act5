@@ -30,8 +30,10 @@ public class PasosPanel extends JPanel {
     // Method to add a step to the JTextArea
     public void addPaso(String paso) {
         String currentText = pasosTextArea.getText();
-        String newStep = (currentText.isEmpty() ? "" : "\n") + (currentText.split("\n").length + 1) + ". " + paso;
-        pasosTextArea.setText(newStep);
+        int stepNumber = currentText.isEmpty() ? 1 : currentText.split("\n").length + 1;
+        String newStep = stepNumber + ". " + paso;
+
+        pasosTextArea.setText(currentText.isEmpty() ? newStep : currentText + "\n" + newStep);
     }
 
     // Method to clear the JTextArea

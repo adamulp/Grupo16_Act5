@@ -21,6 +21,15 @@ public class CotizacionPanel extends JPanel {
         createUI();
     }
 
+    public void clearFields() {
+        cotizarARSField.setText("");
+        cotizarUSDField.setText("");
+        cotizacionARSUSDField.setText("");
+        cotizacionUSDARSField.setText("");
+        conversionARSField.setText("");
+        conversionUSDField.setText("");
+    }
+
     private void createUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

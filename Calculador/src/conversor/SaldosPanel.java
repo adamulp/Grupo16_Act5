@@ -24,10 +24,21 @@ public class SaldosPanel extends JPanel {
         createUI();
     }
 
+    public void clearFields() {
+        pesosArgentinos.setText("");
+        aumentarARSField.setText("");
+        retirarARSField.setText("");
+        dolaresYanquis.setText("");
+        aumentarUSDField.setText("");
+        retirarUSDField.setText("");
+        resultARSField.setText("");
+        resultUSDField.setText("");
+    }
+
     private void createUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
+
         // Initialize text fields
         pesosArgentinos = new JTextField(10);
         aumentarARSField = new JTextField(10);
@@ -35,7 +46,7 @@ public class SaldosPanel extends JPanel {
         dolaresYanquis = new JTextField(10);
         aumentarUSDField = new JTextField(10);
         retirarUSDField = new JTextField(10);
-        
+
         resultARSField = new JTextField(10);
         resultUSDField = new JTextField(10);
         resultARSField.setEditable(false);
@@ -171,6 +182,7 @@ public class SaldosPanel extends JPanel {
 
     // DocumentFilter to restrict input to numeric characters
     private class NumericDocumentFilter extends DocumentFilter {
+
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (isNumeric(string)) {
