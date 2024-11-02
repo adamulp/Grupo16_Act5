@@ -9,19 +9,19 @@ import java.math.BigDecimal;
 public class SaldosPanel extends JPanel {
 
     private JTextField pesosArgentinos;
-    private JTextField aumentarARSField; // For increasing ARS
-    private JTextField retirarARSField; // For withdrawing ARS
+    private JTextField aumentarARSField;
+    private JTextField retirarARSField;
     private JTextField dolaresYanquis;
-    private JTextField aumentarUSDField; // For increasing USD
-    private JTextField retirarUSDField; // For withdrawing USD
-    private JTextField resultARSField; // Result field for ARS
-    private JTextField resultUSDField; // Result field for USD
+    private JTextField aumentarUSDField;
+    private JTextField retirarUSDField;
+    private JTextField resultARSField;
+    private JTextField resultUSDField;
     private ConversorMoneda conversorMoneda;
-    private PasosPanel pasosPanel; // Reference to PasosPanel
+    private PasosPanel pasosPanel;
 
     public SaldosPanel(ConversorMoneda conversorMoneda, PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
-        this.pasosPanel = pasosPanel; // Initialize PasosPanel reference
+        this.pasosPanel = pasosPanel;
         createUI();
     }
 
@@ -35,7 +35,6 @@ public class SaldosPanel extends JPanel {
         resultARSField.setText("");
         resultUSDField.setText("");
 
-        // Reset button colors when clearing fields
         resetButtonColors();
     }
 
@@ -43,7 +42,6 @@ public class SaldosPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Initialize text fields
         pesosArgentinos = new JTextField(10);
         aumentarARSField = new JTextField(10);
         retirarARSField = new JTextField(10);
@@ -63,22 +61,21 @@ public class SaldosPanel extends JPanel {
         JButton aumentarUSDButton = new JButton("Aumentar USD");
         JButton retirarUSDButton = new JButton("Retirar USD");
 
-        // Add action listeners for buttons with color change
         aumentarARSPesoButton.addActionListener(e -> {
             performOperation("aumentarARS");
-            aumentarARSPesoButton.setBackground(Color.ORANGE); // Change to orange on click
+            aumentarARSPesoButton.setBackground(Color.ORANGE);
         });
         retirarARSPesoButton.addActionListener(e -> {
             performOperation("retirarARS");
-            retirarARSPesoButton.setBackground(Color.ORANGE); // Change to orange on click
+            retirarARSPesoButton.setBackground(Color.ORANGE);
         });
         aumentarUSDButton.addActionListener(e -> {
             performOperation("aumentarUSD");
-            aumentarUSDButton.setBackground(Color.ORANGE); // Change to orange on click
+            aumentarUSDButton.setBackground(Color.ORANGE);
         });
         retirarUSDButton.addActionListener(e -> {
             performOperation("retirarUSD");
-            retirarUSDButton.setBackground(Color.ORANGE); // Change to orange on click
+            retirarUSDButton.setBackground(Color.ORANGE);
         });
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -106,7 +103,7 @@ public class SaldosPanel extends JPanel {
         add(retirarARSField, gbc);
 
         // Adding extra space between ARS and USD
-        gbc.insets = new Insets(0, 20, 0, 0); // Add 20 pixels of space on the left side for the USD column
+        gbc.insets = new Insets(0, 20, 0, 0);
 
         // USD Inputs
         gbc.gridx = 3; // Move to the next column for USD
@@ -156,7 +153,7 @@ public class SaldosPanel extends JPanel {
 
     private void performOperation(String operation) {
         try {
-            BigDecimal result = BigDecimal.ZERO; // Default result initialization
+            BigDecimal result = BigDecimal.ZERO;
 
             switch (operation) {
                 case "aumentarARS":
@@ -199,7 +196,6 @@ public class SaldosPanel extends JPanel {
         }
     }
 
-    // DocumentFilter to restrict input to numeric characters
     private class NumericDocumentFilter extends DocumentFilter {
 
         @Override
@@ -222,14 +218,14 @@ public class SaldosPanel extends JPanel {
         }
 
         private boolean isNumeric(String str) {
-            return str.matches("[0-9,.]*"); // Allows digits, commas, and periods
+            return str.matches("[0-9,.]*");
         }
     }
 
     private void resetButtonColors() {
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
-                component.setBackground(null); // Reset to default color
+                component.setBackground(null);
             }
         }
     }

@@ -36,7 +36,7 @@ public class ConversorGUI extends JFrame {
         mainPanel.add(saldoPanel, gbc);
 
         // Add spacing before cotizacionPanel
-        gbc.insets = new Insets(20, 20, 20, 20); // Adds padding around cotizacionPanel
+        gbc.insets = new Insets(20, 20, 20, 20);
         gbc.gridx = 1;
         gbc.gridy = 0; // Keep it in the same row
         mainPanel.add(cotizacionPanel, gbc);

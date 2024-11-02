@@ -13,7 +13,6 @@ public class ConversorMoneda {
     private static final int CONVERSION_SCALE = 3;
 
     public ConversorMoneda() {
-        // You could have additional setup here if needed
     }
 
     public static void main(String[] args) {

@@ -8,18 +8,18 @@ import java.math.RoundingMode;
 
 public class CotizacionPanel extends JPanel {
 
-    private JTextField cotizarARSField; // Input for ARS to quote
-    private JTextField cotizarUSDField; // Input for USD to quote
-    private JTextField cotizacionARSUSDField; // Result for ARS/USD
-    private JTextField cotizacionUSDARSField; // Result for USD/ARS
-    private JTextField montoARS; // Input for ARS to convert
-    private JTextField montoUSD; // Input for USD to convert
+    private JTextField cotizarARSField;
+    private JTextField cotizarUSDField;
+    private JTextField cotizacionARSUSDField;
+    private JTextField cotizacionUSDARSField;
+    private JTextField montoARS;
+    private JTextField montoUSD;
     private ConversorMoneda conversorMoneda;
-    private PasosPanel pasosPanel; // Reference to PasosPanel
+    private PasosPanel pasosPanel;
 
     public CotizacionPanel(ConversorMoneda conversorMoneda, PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
-        this.pasosPanel = pasosPanel; // Initialize PasosPanel reference
+        this.pasosPanel = pasosPanel;
         createUI();
     }
 
@@ -31,7 +31,6 @@ public class CotizacionPanel extends JPanel {
         montoARS.setText("");
         montoUSD.setText("");
 
-        // Reset button colors when clearing fields
         resetButtonColors();
     }
 
@@ -39,22 +38,18 @@ public class CotizacionPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        // Create a panel for the title and divider
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         
         JLabel titleLabel = new JLabel("Cotizar", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         
-        // Create a JSeparator for the divider
         JSeparator separator = new JSeparator();
 
-        // Add components to the header panel
         headerPanel.add(titleLabel, BorderLayout.NORTH);
         headerPanel.add(separator, BorderLayout.SOUTH);
 
 
-        // Initialize text fields
         cotizarARSField = new JTextField(10);
         cotizarUSDField = new JTextField(10);
         cotizacionARSUSDField = new JTextField(10);
@@ -80,7 +75,7 @@ public class CotizacionPanel extends JPanel {
         JButton cotizarButton = new JButton("Cotizar");
         cotizarButton.addActionListener(e -> {
             performCotizacion();
-            cotizarButton.setBackground(Color.ORANGE); // Change color to orange on click
+            cotizarButton.setBackground(Color.ORANGE);
         });
 
         JButton convertirUSDButton = new JButton("Convertir a USD");
@@ -88,12 +83,12 @@ public class CotizacionPanel extends JPanel {
 
         convertirUSDButton.addActionListener(e -> {
             performConversion("USD");
-            convertirUSDButton.setBackground(Color.ORANGE); // Change color to orange on click
+            convertirUSDButton.setBackground(Color.ORANGE);
         });
 
         convertirARSButton.addActionListener(e -> {
             performConversion("ARS");
-            convertirARSButton.setBackground(Color.ORANGE); // Change color to orange on click
+            convertirARSButton.setBackground(Color.ORANGE);
         });
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -173,7 +168,6 @@ public class CotizacionPanel extends JPanel {
         try {
             BigDecimal result;
 
-            // Perform conversion using the previously calculated cotización values
             if (currency.equals("USD")) {
                 BigDecimal cotizacion = new BigDecimal(cotizacionARSUSDField.getText());
                 BigDecimal amountToConvert = new BigDecimal(montoARS.getText());
