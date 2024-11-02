@@ -33,6 +33,9 @@ public class SaldosPanel extends JPanel {
         retirarUSDField.setText("");
         resultARSField.setText("");
         resultUSDField.setText("");
+
+        // Reset button colors when clearing fields
+        resetButtonColors();
     }
 
     private void createUI() {
@@ -59,11 +62,23 @@ public class SaldosPanel extends JPanel {
         JButton aumentarUSDButton = new JButton("Aumentar USD");
         JButton retirarUSDButton = new JButton("Retirar USD");
 
-        // Add action listeners for buttons
-        aumentarARSPesoButton.addActionListener(e -> performOperation("aumentarARS"));
-        retirarARSPesoButton.addActionListener(e -> performOperation("retirarARS"));
-        aumentarUSDButton.addActionListener(e -> performOperation("aumentarUSD"));
-        retirarUSDButton.addActionListener(e -> performOperation("retirarUSD"));
+        // Add action listeners for buttons with color change
+        aumentarARSPesoButton.addActionListener(e -> {
+            performOperation("aumentarARS");
+            aumentarARSPesoButton.setBackground(Color.ORANGE); // Change to orange on click
+        });
+        retirarARSPesoButton.addActionListener(e -> {
+            performOperation("retirarARS");
+            retirarARSPesoButton.setBackground(Color.ORANGE); // Change to orange on click
+        });
+        aumentarUSDButton.addActionListener(e -> {
+            performOperation("aumentarUSD");
+            aumentarUSDButton.setBackground(Color.ORANGE); // Change to orange on click
+        });
+        retirarUSDButton.addActionListener(e -> {
+            performOperation("retirarUSD");
+            retirarUSDButton.setBackground(Color.ORANGE); // Change to orange on click
+        });
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
@@ -88,6 +103,9 @@ public class SaldosPanel extends JPanel {
 
         gbc.gridx = 1;
         add(retirarARSField, gbc);
+
+        // Adding extra space between ARS and USD
+        gbc.insets = new Insets(0, 20, 0, 0); // Add 20 pixels of space on the left side for the USD column
 
         // USD Inputs
         gbc.gridx = 3; // Move to the next column for USD
@@ -204,6 +222,14 @@ public class SaldosPanel extends JPanel {
 
         private boolean isNumeric(String str) {
             return str.matches("[0-9,.]*"); // Allows digits, commas, and periods
+        }
+    }
+
+    private void resetButtonColors() {
+        for (Component component : getComponents()) {
+            if (component instanceof JButton) {
+                component.setBackground(null); // Reset to default color
+            }
         }
     }
 }

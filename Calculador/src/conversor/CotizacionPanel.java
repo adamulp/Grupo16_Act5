@@ -28,6 +28,9 @@ public class CotizacionPanel extends JPanel {
         cotizacionUSDARSField.setText("");
         conversionARSField.setText("");
         conversionUSDField.setText("");
+
+        // Reset button colors when clearing fields
+        resetButtonColors();
     }
 
     private void createUI() {
@@ -47,14 +50,24 @@ public class CotizacionPanel extends JPanel {
 
         // Cotización button
         JButton cotizarButton = new JButton("Cotizar");
-        cotizarButton.addActionListener(e -> performCotizacion());
+        cotizarButton.addActionListener(e -> {
+            performCotizacion();
+            cotizarButton.setBackground(Color.ORANGE); // Change color to orange on click
+        });
 
         // Convert buttons
         JButton convertirUSDButton = new JButton("Convertir a USD");
         JButton convertirARSButton = new JButton("Convertir a ARS");
 
-        convertirUSDButton.addActionListener(e -> performConversion("USD"));
-        convertirARSButton.addActionListener(e -> performConversion("ARS"));
+        convertirUSDButton.addActionListener(e -> {
+            performConversion("USD");
+            convertirUSDButton.setBackground(Color.ORANGE); // Change color to orange on click
+        });
+        
+        convertirARSButton.addActionListener(e -> {
+            performConversion("ARS");
+            convertirARSButton.setBackground(Color.ORANGE); // Change color to orange on click
+        });
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
@@ -64,7 +77,6 @@ public class CotizacionPanel extends JPanel {
         add(new JLabel("Cotizar ARS:"), gbc);
         gbc.gridx = 1;
         add(cotizarARSField, gbc);
-
         gbc.gridx = 2;
         add(cotizarButton, gbc);
 
@@ -76,12 +88,12 @@ public class CotizacionPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        add(new JLabel("ARS/USD:"), gbc);
+        add(new JLabel("               ARS/USD:"), gbc);
         gbc.gridx = 1;
         add(cotizacionARSUSDField, gbc);
 
-        gbc.gridx = 2;
-        add(new JLabel("USD/ARS:"), gbc);
+        gbc.gridx = 2; // Adjust to align with the other USD label
+        add(new JLabel("                       USD/ARS:"), gbc);
         gbc.gridx = 3;
         add(cotizacionUSDARSField, gbc);
 
@@ -155,6 +167,14 @@ public class CotizacionPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void resetButtonColors() {
+        for (Component component : getComponents()) {
+            if (component instanceof JButton) {
+                component.setBackground(null); // Reset to default color
+            }
         }
     }
 }

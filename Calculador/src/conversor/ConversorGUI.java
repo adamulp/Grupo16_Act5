@@ -28,11 +28,16 @@ public class ConversorGUI extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.fill = GridBagConstraints.BOTH;
+
+        // Add saldoPanel
         gbc.gridx = 0;
         gbc.gridy = 0;
         mainPanel.add(saldoPanel, gbc);
 
+        // Add spacing before cotizacionPanel
+        gbc.insets = new Insets(20, 20, 20, 20); // Adds padding around cotizacionPanel
         gbc.gridx = 1;
+        gbc.gridy = 0; // Keep it in the same row
         mainPanel.add(cotizacionPanel, gbc);
 
         add(mainPanel, BorderLayout.CENTER);
@@ -44,7 +49,7 @@ public class ConversorGUI extends JFrame {
 
         add(clearButton, BorderLayout.NORTH);
 
-        setSize(1080, 450);
+        setSize(1200, 450);
         setLocationRelativeTo(null);
         setVisible(true);
     }
