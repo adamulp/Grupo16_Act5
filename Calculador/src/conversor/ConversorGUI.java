@@ -15,10 +15,12 @@ public class ConversorGUI extends JFrame {
     private JTextField aumentarUSDField; // For increasing USD
     private JTextField retirarARSField; // For withdrawing ARS
     private JTextField retirarUSDField; // For withdrawing USD
-    
+
     // Fields for Cotización
     private JTextField cotizarARSField; // Input for ARS to quote
     private JTextField cotizarUSDField; // Input for USD to quote
+    private JTextField conversionARSField; // Input for ARS to convert
+    private JTextField conversionUSDField; // Input for USD to convert
     private JTextField cotizacionARSUSDField; // Result for ARS/USD
     private JTextField cotizacionUSDARSField; // Result for USD/ARS
 
@@ -27,6 +29,8 @@ public class ConversorGUI extends JFrame {
     public ConversorGUI() {
         conversorMoneda = new ConversorMoneda();
         createUI();
+        ((AbstractDocument) conversionARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) conversionUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
     }
 
     private void createUI() {
@@ -34,6 +38,10 @@ public class ConversorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+
+        // Initialize conversion fields
+        conversionARSField = new JTextField(10);
+        conversionUSDField = new JTextField(10);
 
         pesosArgentinos = new JTextField(10);
         aumentarARSField = new JTextField(10);
@@ -161,10 +169,6 @@ public class ConversorGUI extends JFrame {
 
         gbc.gridx = 3;
         gbc.gridy = 5;
-        add(new JLabel("USD/ARS:"), gbc);
-        gbc.gridx = 4;
-        add(cotizacionUSDARSField, gbc);
-
         // Adding a gap for better spacing
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -172,13 +176,24 @@ public class ConversorGUI extends JFrame {
         gbc.insets = new Insets(10, 0, 10, 0); // Add space above and below
         add(new JLabel("Conversiónes:"), gbc);
 
-        // Conversion buttons
+        // Conversion buttons and fields
         gbc.gridy = 7;
         gbc.gridwidth = 1; // Reset to default
         gbc.gridx = 0;
+        add(new JLabel("ARS:"), gbc);
+        gbc.gridx = 1;
+        add(conversionARSField, gbc);
+        gbc.gridx = 2;
         add(convertirUSDButton, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 3;
+        add(new JLabel("USD:"), gbc);
+        gbc.gridx = 4;
+        add(conversionUSDField, gbc);
+        gbc.gridx = 5;
+        add(convertirARSButton, gbc);
+
+        gbc.gridx = 6;
         add(convertirARSButton, gbc);
 
         // Clear Button
@@ -215,25 +230,29 @@ public class ConversorGUI extends JFrame {
                 case "aumentarARS":
                     String numARSStr = aumentarARSField.getText().replace(',', '.');
                     Number numARS = new BigDecimal(numARSStr);
-                    result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
+                    result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO
+                            : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
                     resultARSField.setText(result.toString()); // Set result for ARS
                     break;
                 case "retirarARS":
                     String numRetirarARSStr = retirarARSField.getText().replace(',', '.');
                     Number numRetirarARS = new BigDecimal(numRetirarARSStr);
-                    result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
+                    result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO
+                            : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
                     resultARSField.setText(result.toString()); // Set result for ARS
                     break;
                 case "aumentarUSD":
                     String numUSDStr = aumentarUSDField.getText().replace(',', '.');
                     Number numUSD = new BigDecimal(numUSDStr);
-                    result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
+                    result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO
+                            : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
                     resultUSDField.setText(result.toString()); // Set result for USD
                     break;
                 case "retirarUSD":
                     String numRetirarUSDStr = retirarUSDField.getText().replace(',', '.');
                     Number numRetirarUSD = new BigDecimal(numRetirarUSDStr);
-                    result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
+                    result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO
+                            : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
                     resultUSDField.setText(result.toString()); // Set result for USD
                     break;
                 case "convertir":
@@ -243,7 +262,8 @@ public class ConversorGUI extends JFrame {
                     throw new UnsupportedOperationException("Operación no soportada");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -259,7 +279,8 @@ public class ConversorGUI extends JFrame {
             BigDecimal cotizarARS = new BigDecimal(cotizarARSStr);
             BigDecimal cotizarUSD = new BigDecimal(cotizarUSDStr);
 
-            // Example of how to calculate cotizations (you may need to implement the actual logic)
+            // Example of how to calculate cotizations (you may need to implement the actual
+            // logic)
             BigDecimal cotizacionARSUSD = cotizarARS.divide(cotizarUSD, BigDecimal.ROUND_HALF_UP); // ARS/USD
             BigDecimal cotizacionUSDARS = cotizarUSD.divide(cotizarARS, BigDecimal.ROUND_HALF_UP); // USD/ARS
 
@@ -267,7 +288,8 @@ public class ConversorGUI extends JFrame {
             cotizacionUSDARSField.setText(cotizacionUSDARS.toString());
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para cotización.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para cotización.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -292,7 +314,8 @@ public class ConversorGUI extends JFrame {
                 resultARSField.setText(result.toString());
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para la conversión.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para la conversión.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -326,14 +349,16 @@ public class ConversorGUI extends JFrame {
 
     private class NumericDocumentFilter extends DocumentFilter {
         @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                throws BadLocationException {
             if (isNumeric(string)) {
                 super.insertString(fb, offset, string.replace(',', '.'), attr);
             }
         }
 
         @Override
-        public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attr) throws BadLocationException {
+        public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attr)
+                throws BadLocationException {
             if (isNumeric(string)) {
                 super.replace(fb, offset, length, string.replace(',', '.'), attr);
             }
