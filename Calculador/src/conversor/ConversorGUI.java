@@ -19,9 +19,9 @@ public class ConversorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create the panels
-        JPanel saldoPanel = new SaldosPanel(conversorMoneda);
-        JPanel cotizacionPanel = new CotizacionPanel(conversorMoneda);
+        // Create the panels and pass pasosPanel to SaldosPanel
+        JPanel saldoPanel = new SaldosPanel(conversorMoneda, pasosPanel);
+        JPanel cotizacionPanel = new CotizacionPanel(conversorMoneda, pasosPanel);
 
         // Create a main panel to hold the saldo and cotizacion panels
         JPanel mainPanel = new JPanel();
@@ -44,7 +44,7 @@ public class ConversorGUI extends JFrame {
         // Add the PasosPanel at the bottom of the frame
         add(pasosPanel, BorderLayout.SOUTH);
 
-        setSize(900, 450); // Adjusted size for better layout
+        setSize(1080, 450); // Adjusted size for better layout
         setLocationRelativeTo(null); // Center on screen
         setVisible(true);
     }

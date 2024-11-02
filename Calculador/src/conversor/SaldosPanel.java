@@ -16,9 +16,11 @@ public class SaldosPanel extends JPanel {
     private JTextField resultARSField; // Result field for ARS
     private JTextField resultUSDField; // Result field for USD
     private ConversorMoneda conversorMoneda;
+    private PasosPanel pasosPanel; // Reference to PasosPanel
 
-    public SaldosPanel(ConversorMoneda conversorMoneda) {
+    public SaldosPanel(ConversorMoneda conversorMoneda, PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
+        this.pasosPanel = pasosPanel; // Initialize PasosPanel reference
         createUI();
     }
 
@@ -132,24 +134,28 @@ public class SaldosPanel extends JPanel {
                     Number numARS = new BigDecimal(numARSStr);
                     result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
                     resultARSField.setText(result.toString()); // Set result for ARS
+                    pasosPanel.addPaso("Aumentar ARS: " + numARSStr); // Log step
                     break;
                 case "retirarARS":
                     String numRetirarARSStr = retirarARSField.getText().replace(',', '.');
                     Number numRetirarARS = new BigDecimal(numRetirarARSStr);
                     result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
                     resultARSField.setText(result.toString()); // Set result for ARS
+                    pasosPanel.addPaso("Retirar ARS: " + numRetirarARSStr); // Log step
                     break;
                 case "aumentarUSD":
                     String numUSDStr = aumentarUSDField.getText().replace(',', '.');
                     Number numUSD = new BigDecimal(numUSDStr);
                     result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
                     resultUSDField.setText(result.toString()); // Set result for USD
+                    pasosPanel.addPaso("Aumentar USD: " + numUSDStr); // Log step
                     break;
                 case "retirarUSD":
                     String numRetirarUSDStr = retirarUSDField.getText().replace(',', '.');
                     Number numRetirarUSD = new BigDecimal(numRetirarUSDStr);
                     result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
                     resultUSDField.setText(result.toString()); // Set result for USD
+                    pasosPanel.addPaso("Retirar USD: " + numRetirarUSDStr); // Log step
                     break;
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");

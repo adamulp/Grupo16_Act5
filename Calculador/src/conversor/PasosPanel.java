@@ -21,6 +21,7 @@ public class PasosPanel extends JPanel {
         pasosTextArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(pasosTextArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension(400, 200)); // Set preferred size
 
         // Add the JScrollPane to the panel
         add(scrollPane, BorderLayout.CENTER);
