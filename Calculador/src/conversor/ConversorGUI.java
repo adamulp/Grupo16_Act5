@@ -15,6 +15,13 @@ public class ConversorGUI extends JFrame {
     private JTextField aumentarUSDField; // For increasing USD
     private JTextField retirarARSField; // For withdrawing ARS
     private JTextField retirarUSDField; // For withdrawing USD
+    
+    // Fields for Cotización
+    private JTextField cotizarARSField; // Input for ARS to quote
+    private JTextField cotizarUSDField; // Input for USD to quote
+    private JTextField cotizacionARSUSDField; // Result for ARS/USD
+    private JTextField cotizacionUSDARSField; // Result for USD/ARS
+
     private ConversorMoneda conversorMoneda;
 
     public ConversorGUI() {
@@ -41,6 +48,14 @@ public class ConversorGUI extends JFrame {
         resultARSField.setEditable(false);
         resultUSDField.setEditable(false);
 
+        // Cotización fields
+        cotizarARSField = new JTextField(10);
+        cotizarUSDField = new JTextField(10);
+        cotizacionARSUSDField = new JTextField(10);
+        cotizacionUSDARSField = new JTextField(10);
+        cotizacionARSUSDField.setEditable(false);
+        cotizacionUSDARSField.setEditable(false);
+
         applyDocumentFilters();
 
         JButton aumentarARSPesoButton = new JButton("Aumentar ARS");
@@ -56,7 +71,9 @@ public class ConversorGUI extends JFrame {
         aumentarUSDButton.addActionListener(e -> performOperation("aumentarUSD", aumentarUSDButton));
         retirarUSDButton.addActionListener(e -> performOperation("retirarUSD", retirarUSDButton));
         convertirButton.addActionListener(e -> performOperation("convertir", convertirButton));
-        cotizarButton.addActionListener(e -> performOperation("cotizar", cotizarButton));
+
+        // Action listener for cotizar button
+        cotizarButton.addActionListener(e -> performCotizacion());
 
         clearButton.addActionListener(e -> clearFields());
 
@@ -109,32 +126,57 @@ public class ConversorGUI extends JFrame {
         // Result Fields
         gbc.gridx = 0;
         gbc.gridy = 3;
-        add(new JLabel("Resultado ARS:"), gbc);
+        add(new JLabel("Saldo ARS:"), gbc);
         gbc.gridx = 1;
         add(resultARSField, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = 3;
-        add(new JLabel("Resultado USD:"), gbc);
+        add(new JLabel("Saldo USD:"), gbc);
         gbc.gridx = 4;
         add(resultUSDField, gbc);
 
-        // Other buttons
+        // Cotización Fields
         gbc.gridx = 0;
         gbc.gridy = 4;
-        add(convertirButton, gbc);
+        add(new JLabel("Cotizar ARS:"), gbc);
+        gbc.gridx = 1;
+        add(cotizarARSField, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        add(new JLabel("Cotizar USD:"), gbc);
+        gbc.gridx = 4;
+        add(cotizarUSDField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        add(cotizarButton, gbc);
 
         gbc.gridx = 1;
-        add(cotizarButton, gbc);
+        add(new JLabel("ARS/USD:"), gbc);
+        gbc.gridx = 2;
+        add(cotizacionARSUSDField, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        add(new JLabel("USD/ARS:"), gbc);
+        gbc.gridx = 4;
+        add(cotizacionUSDARSField, gbc);
+
+        // Other buttons
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        add(convertirButton, gbc);
 
         // Clear Button
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 7;
         gbc.gridwidth = 6; // Make it span across all columns
         add(clearButton, gbc);
 
-        setSize(800, 400); // Adjusted size for better layout
+        setSize(900, 400); // Adjusted size for better layout
         setLocationRelativeTo(null); // Center on screen
         setVisible(true);
     }
@@ -147,6 +189,8 @@ public class ConversorGUI extends JFrame {
         ((AbstractDocument) aumentarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         ((AbstractDocument) retirarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         ((AbstractDocument) retirarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) cotizarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) cotizarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
     }
 
     private void performOperation(String operation, JButton button) {
@@ -183,14 +227,35 @@ public class ConversorGUI extends JFrame {
                 case "convertir":
                     // Implement conversion logic here if needed
                     break;
-                case "cotizar":
-                    // Implement quoting logic here if needed
-                    break;
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ArithmeticException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void performCotizacion() {
+        try {
+            String cotizarARSStr = cotizarARSField.getText().replace(',', '.');
+            String cotizarUSDStr = cotizarUSDField.getText().replace(',', '.');
+
+            BigDecimal cotizarARS = new BigDecimal(cotizarARSStr);
+            BigDecimal cotizarUSD = new BigDecimal(cotizarUSDStr);
+
+            // Example of how to calculate cotizations (you may need to implement the actual logic)
+            BigDecimal cotizacionARSUSD = cotizarARS.divide(cotizarUSD, BigDecimal.ROUND_HALF_UP); // ARS/USD
+            BigDecimal cotizacionUSDARS = cotizarUSD.divide(cotizarARS, BigDecimal.ROUND_HALF_UP); // USD/ARS
+
+            cotizacionARSUSDField.setText(cotizacionARSUSD.toString());
+            cotizacionUSDARSField.setText(cotizacionUSDARS.toString());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para cotización.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -207,6 +272,10 @@ public class ConversorGUI extends JFrame {
         aumentarUSDField.setText("");
         retirarARSField.setText("");
         retirarUSDField.setText("");
+        cotizarARSField.setText("");
+        cotizarUSDField.setText("");
+        cotizacionARSUSDField.setText("");
+        cotizacionUSDARSField.setText("");
         resetButtonColors();
     }
 
