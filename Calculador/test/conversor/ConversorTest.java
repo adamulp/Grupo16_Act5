@@ -1,8 +1,9 @@
 /*
  JUnit version: 5.6.0 (Shift+F6 desde syscheck/JunitVersionCheck)
  */
-package calculador;
+package conversor;
 
+import conversor.ConversorMoneda;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Grupo16
  */
-public class CalculadorTest {
+public class ConversorTest {
     
-    public CalculadorTest() {
+    public ConversorTest() {
     }
     
     @BeforeAll
@@ -42,7 +43,7 @@ public class CalculadorTest {
     public void testMain() {
         System.out.println("main");
         String[] args = null;
-        Calculador.main(args);
+        ConversorMoneda.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

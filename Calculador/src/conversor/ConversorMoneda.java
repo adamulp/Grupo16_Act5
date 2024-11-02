@@ -1,4 +1,4 @@
-package calculador;
+package conversor;
 
 /**
  *
@@ -8,16 +8,16 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-public class Calculador {
+public class ConversorMoneda {
     private int precision;
     private static final int DEFAULT_PRECISION = 10;
     
-    public Calculador(){
+    public ConversorMoneda(){
         this.precision = DEFAULT_PRECISION;
     }
     
     public static void main(String[] args) {
-        Calculador calc = new Calculador();
+        ConversorMoneda calc = new ConversorMoneda();
         BigDecimal result1 = calc.sumar(5, 10);
         BigDecimal result2 = calc.sumar(5.5, 4.5);
         BigDecimal result3 = calc.sumar(new BigDecimal("10.5"), new BigDecimal("5.5"));
