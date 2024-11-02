@@ -62,17 +62,18 @@ public class ConversorGUI extends JFrame {
         JButton retirarARSPesoButton = new JButton("Retirar ARS");
         JButton aumentarUSDButton = new JButton("Aumentar USD");
         JButton retirarUSDButton = new JButton("Retirar USD");
-        JButton convertirButton = new JButton("Convertir");
         JButton cotizarButton = new JButton("Cotizar");
         JButton clearButton = new JButton("Limpiar Campos");
+
+        JButton convertirUSDButton = new JButton("Convertir a USD");
+        JButton convertirARSButton = new JButton("Convertir a ARS");
 
         aumentarARSPesoButton.addActionListener(e -> performOperation("aumentarARS", aumentarARSPesoButton));
         retirarARSPesoButton.addActionListener(e -> performOperation("retirarARS", retirarARSPesoButton));
         aumentarUSDButton.addActionListener(e -> performOperation("aumentarUSD", aumentarUSDButton));
         retirarUSDButton.addActionListener(e -> performOperation("retirarUSD", retirarUSDButton));
-        convertirButton.addActionListener(e -> performOperation("convertir", convertirButton));
-
-        // Action listener for cotizar button
+        convertirUSDButton.addActionListener(e -> performConversion("USD"));
+        convertirARSButton.addActionListener(e -> performConversion("ARS"));
         cotizarButton.addActionListener(e -> performCotizacion());
 
         clearButton.addActionListener(e -> clearFields());
@@ -164,19 +165,30 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 4;
         add(cotizacionUSDARSField, gbc);
 
-        // Other buttons
+        // Adding a gap for better spacing
         gbc.gridx = 0;
         gbc.gridy = 6;
-        add(convertirButton, gbc);
+        gbc.gridwidth = 5; // Span across multiple columns
+        gbc.insets = new Insets(10, 0, 10, 0); // Add space above and below
+        add(new JLabel("Conversiónes:"), gbc);
+
+        // Conversion buttons
+        gbc.gridy = 7;
+        gbc.gridwidth = 1; // Reset to default
+        gbc.gridx = 0;
+        add(convertirUSDButton, gbc);
+
+        gbc.gridx = 1;
+        add(convertirARSButton, gbc);
 
         // Clear Button
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 7;
-        gbc.gridwidth = 6; // Make it span across all columns
+        gbc.gridy = 8;
+        gbc.gridwidth = 5; // Make it span across all columns
         add(clearButton, gbc);
 
-        setSize(900, 400); // Adjusted size for better layout
+        setSize(900, 450); // Adjusted size for better layout
         setLocationRelativeTo(null); // Center on screen
         setVisible(true);
     }
@@ -256,6 +268,31 @@ public class ConversorGUI extends JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para cotización.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ArithmeticException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void performConversion(String currency) {
+        try {
+            BigDecimal result;
+
+            // Perform conversion using the previously calculated cotización values
+            if (currency.equals("USD")) {
+                BigDecimal cotizacion = new BigDecimal(cotizacionARSUSDField.getText());
+                BigDecimal amountToConvert = new BigDecimal(pesosArgentinos.getText());
+                result = amountToConvert.multiply(cotizacion);
+                resultUSDField.setText(result.toString());
+            } else if (currency.equals("ARS")) {
+                BigDecimal cotizacion = new BigDecimal(cotizacionUSDARSField.getText());
+                BigDecimal amountToConvert = new BigDecimal(dolaresYanquis.getText());
+                result = amountToConvert.multiply(cotizacion);
+                resultARSField.setText(result.toString());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para la conversión.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ArithmeticException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
