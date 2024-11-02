@@ -30,7 +30,7 @@ public class ConversorMoneda {
         System.out.println("Difference: " + result4);
     }
 
-    private BigDecimal toBigDecimal(Number number) {
+    private static BigDecimal toBigDecimal(Number number) {
         if (number instanceof BigDecimal) {
             return (BigDecimal) number;
         } else if (number instanceof BigInteger) {
@@ -40,23 +40,23 @@ public class ConversorMoneda {
         }
     }
 
-    public BigDecimal aumentar(Number a, Number b) {
+    public static BigDecimal aumentar(Number a, Number b) {
         return toBigDecimal(a).add(toBigDecimal(b));
     }
 
-    public BigDecimal retirar(Number a, Number b) {
+    public static BigDecimal retirar(Number a, Number b) {
         return toBigDecimal(a).subtract(toBigDecimal(b));
     }
 
-    public BigDecimal cotizar(Number a, Number b) {
+    public static BigDecimal cotizar(Number a, Number b) {
         BigDecimal divisor = toBigDecimal(b);
         if (divisor.compareTo(BigDecimal.ZERO) == 0) {
             throw new ArithmeticException("Division by zero");
         }
-        return toBigDecimal(a).divide(divisor, this.precision, RoundingMode.HALF_UP);
+        return toBigDecimal(a).divide(divisor, DEFAULT_PRECISION, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal convertir(Number a, Number b) {
+    public static BigDecimal convertir(Number a, Number b) {
         return toBigDecimal(a).multiply(toBigDecimal(b));
     }
 }
