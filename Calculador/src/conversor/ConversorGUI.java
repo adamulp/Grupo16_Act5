@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 public class ConversorGUI extends JFrame {
-    private JTextField entradaA;
-    private JTextField entradaB;
+    private JTextField pesosArgentinos;
+    private JTextField dolaresYanquis;
     private JTextField resultField;
     private ConversorMoneda conversorMoneda;
 
@@ -28,13 +28,13 @@ public class ConversorGUI extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        entradaA = new JTextField(10);
-        entradaB = new JTextField(10);
+        pesosArgentinos = new JTextField(10);
+        dolaresYanquis = new JTextField(10);
         resultField = new JTextField(10);
         resultField.setEditable(false);
 
-        ((AbstractDocument) entradaA.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) entradaB.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) dolaresYanquis.getDocument()).setDocumentFilter(new NumericDocumentFilter());
 
         JButton aumentarButton = new JButton("Aumentar");
         JButton retirarButton = new JButton("Retirar");
@@ -55,17 +55,17 @@ public class ConversorGUI extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(new JLabel("Valor A:"), gbc);
+        add(new JLabel("ARS:"), gbc);
         
         gbc.gridx = 1;
-        add(entradaA, gbc);
+        add(pesosArgentinos, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(new JLabel("Valor B:"), gbc);
+        add(new JLabel("USD:"), gbc);
         
         gbc.gridx = 1;
-        add(entradaB, gbc);
+        add(dolaresYanquis, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -105,8 +105,8 @@ public class ConversorGUI extends JFrame {
             button.setBackground(Color.ORANGE);
             
             // Convert commas to periods before parsing
-            String num1Str = entradaA.getText().replace(',', '.');
-            String num2Str = entradaB.getText().replace(',', '.');
+            String num1Str = pesosArgentinos.getText().replace(',', '.');
+            String num2Str = dolaresYanquis.getText().replace(',', '.');
 
             Number num1 = new BigDecimal(num1Str);
             Number num2 = new BigDecimal(num2Str);
@@ -140,8 +140,8 @@ public class ConversorGUI extends JFrame {
     }
 
     private void clearFields() {
-        entradaA.setText("");
-        entradaB.setText("");
+        pesosArgentinos.setText("");
+        dolaresYanquis.setText("");
         resultField.setText("");
         resetButtonColors(); // Reset button colors when fields are cleared
     }
