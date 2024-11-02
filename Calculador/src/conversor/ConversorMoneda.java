@@ -18,7 +18,9 @@ public class ConversorMoneda {
     
     public static void main(String[] args) {
         ConversorMoneda calc = new ConversorMoneda();
-        BigDecimal result1 = calc.aumentar(5, 10);
+        BigInteger saldo = BigInteger.valueOf(5);
+        BigDecimal result1 = calc.aumentar(saldo, 10);
+        System.out.println("saldo=" + saldo);
         BigDecimal result2 = calc.aumentar(5.5, 4.5);
         BigDecimal result3 = calc.aumentar(new BigDecimal("10.5"), new BigDecimal("5.5"));
 

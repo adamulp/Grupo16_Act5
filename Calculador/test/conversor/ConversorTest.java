@@ -37,7 +37,7 @@ public class ConversorTest {
     }
 
     /**
-     * Test of main method, of class Calculador.
+     * Test of main method, of class ConversorMoneda.
      */
     @Test
     public void testMain() {
