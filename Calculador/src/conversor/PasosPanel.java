@@ -18,9 +18,8 @@ public class PasosPanel extends JPanel {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         
-        // Create a JLabel for the title
         JLabel titleLabel = new JLabel("Pasos", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Optional: change font size and style
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         // Create a JSeparator for the divider
         JSeparator separator = new JSeparator();

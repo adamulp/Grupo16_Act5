@@ -3,6 +3,7 @@ package conversor;
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CotizacionPanel extends JPanel {
 
@@ -36,6 +37,21 @@ public class CotizacionPanel extends JPanel {
     private void createUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        
+        // Create a panel for the title and divider
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        
+        JLabel titleLabel = new JLabel("Cotizar", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        // Create a JSeparator for the divider
+        JSeparator separator = new JSeparator();
+
+        // Add components to the header panel
+        headerPanel.add(titleLabel, BorderLayout.NORTH);
+        headerPanel.add(separator, BorderLayout.SOUTH);
+
 
         // Initialize text fields
         cotizarARSField = new JTextField(10);
@@ -84,7 +100,7 @@ public class CotizacionPanel extends JPanel {
         // Cotización Inputs
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(new JLabel("Cotizar ARS:"), gbc);
+        add(new JLabel("               ARS:"), gbc);
         gbc.gridx = 1;
         add(cotizarARSField, gbc);
         gbc.gridx = 2;
@@ -92,7 +108,7 @@ public class CotizacionPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(new JLabel("Cotizar USD:"), gbc);
+        add(new JLabel("               USD:"), gbc);
         gbc.gridx = 1;
         add(cotizarUSDField, gbc);
 
@@ -133,9 +149,9 @@ public class CotizacionPanel extends JPanel {
             BigDecimal cotizarARS = new BigDecimal(cotizarARSStr);
             BigDecimal cotizarUSD = new BigDecimal(cotizarUSDStr);
 
-            BigDecimal cotizacionARSUSD = cotizarARS.divide(cotizarUSD, BigDecimal.ROUND_HALF_UP); // ARS/USD
-            BigDecimal cotizacionUSDARS = cotizarUSD.divide(cotizarARS, BigDecimal.ROUND_HALF_UP); // USD/ARS
-
+            // Use ConversorMoneda methods
+            BigDecimal cotizacionUSDARS = conversorMoneda.cotizar(cotizarARS, cotizarUSD);
+            BigDecimal cotizacionARSUSD = conversorMoneda.cotizar(cotizarUSD, cotizarARS);
             cotizacionARSUSDField.setText(cotizacionARSUSD.toString());
             cotizacionUSDARSField.setText(cotizacionUSDARS.toString());
 
@@ -160,14 +176,16 @@ public class CotizacionPanel extends JPanel {
             if (currency.equals("USD")) {
                 BigDecimal cotizacion = new BigDecimal(cotizacionARSUSDField.getText());
                 BigDecimal amountToConvert = new BigDecimal(montoARS.getText());
-                result = amountToConvert.multiply(cotizacion);
-                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a USD", JOptionPane.INFORMATION_MESSAGE);
+                result = conversorMoneda.convertir(amountToConvert, cotizacion); // Use ConversorMoneda method
+                montoUSD.setText(result.toString());
+//                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a USD", JOptionPane.INFORMATION_MESSAGE);
                 pasosPanel.addPaso("Convertir ARS a USD: " + amountToConvert + " * " + cotizacion); // Log step
             } else if (currency.equals("ARS")) {
                 BigDecimal cotizacion = new BigDecimal(cotizacionUSDARSField.getText());
                 BigDecimal amountToConvert = new BigDecimal(montoUSD.getText());
-                result = amountToConvert.multiply(cotizacion);
-                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a ARS", JOptionPane.INFORMATION_MESSAGE);
+                result = conversorMoneda.convertir(amountToConvert, cotizacion); // Use ConversorMoneda method
+                montoARS.setText(result.toString());
+//                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a ARS", JOptionPane.INFORMATION_MESSAGE);
                 pasosPanel.addPaso("Convertir USD a ARS: " + amountToConvert + " * " + cotizacion); // Log step
             }
         } catch (NumberFormatException e) {
