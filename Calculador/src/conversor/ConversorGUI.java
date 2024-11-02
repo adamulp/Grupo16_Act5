@@ -1,20 +1,19 @@
 package conversor;
 
-/**
- *
- * @author Grupo16
- */
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 public class ConversorGUI extends JFrame {
+
     private JTextField pesosArgentinos;
     private JTextField dolaresYanquis;
     private JTextField resultField;
+    private JTextField aumentarARSField; // For increasing ARS
+    private JTextField aumentarUSDField; // For increasing USD
+    private JTextField retirarARSField; // For withdrawing ARS
+    private JTextField retirarUSDField; // For withdrawing USD
     private ConversorMoneda conversorMoneda;
 
     public ConversorGUI() {
@@ -27,59 +26,90 @@ public class ConversorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
+
         pesosArgentinos = new JTextField(10);
+        aumentarARSField = new JTextField(10);
+        retirarARSField = new JTextField(10);
+
         dolaresYanquis = new JTextField(10);
+        aumentarUSDField = new JTextField(10);
+        retirarUSDField = new JTextField(10);
+
         resultField = new JTextField(10);
         resultField.setEditable(false);
 
-        ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) dolaresYanquis.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        applyDocumentFilters();
 
-        JButton aumentarButton = new JButton("Aumentar");
-        JButton retirarButton = new JButton("Retirar");
+        JButton aumentarARSPesoButton = new JButton("Aumentar ARS");
+        JButton retirarARSPesoButton = new JButton("Retirar ARS");
+        JButton aumentarUSDButton = new JButton("Aumentar USD");
+        JButton retirarUSDButton = new JButton("Retirar USD");
         JButton convertirButton = new JButton("Convertir");
         JButton cotizarButton = new JButton("Cotizar");
         JButton clearButton = new JButton("Limpiar Campos");
 
-        // Add action listeners for buttons
-        aumentarButton.addActionListener(e -> performOperation("aumentar", aumentarButton));
-        retirarButton.addActionListener(e -> performOperation("retirar", retirarButton));
+        aumentarARSPesoButton.addActionListener(e -> performOperation("aumentarARS", aumentarARSPesoButton));
+        retirarARSPesoButton.addActionListener(e -> performOperation("retirarARS", retirarARSPesoButton));
+        aumentarUSDButton.addActionListener(e -> performOperation("aumentarUSD", aumentarUSDButton));
+        retirarUSDButton.addActionListener(e -> performOperation("retirarUSD", retirarUSDButton));
         convertirButton.addActionListener(e -> performOperation("convertir", convertirButton));
         cotizarButton.addActionListener(e -> performOperation("cotizar", cotizarButton));
 
-        // Action listener for clear button
         clearButton.addActionListener(e -> clearFields());
 
-        // Add components to the frame with GridBagLayout
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(new JLabel("ARS:"), gbc);
-        
+
         gbc.gridx = 1;
         add(pesosArgentinos, gbc);
-        
+
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(new JLabel("USD:"), gbc);
-        
+        add(aumentarARSPesoButton, gbc);
+
         gbc.gridx = 1;
-        add(dolaresYanquis, gbc);
-        
+        add(aumentarARSField, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 2;
+        add(retirarARSPesoButton, gbc);
+
+        gbc.gridx = 1;
+        add(retirarARSField, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        add(new JLabel("USD:"), gbc);
+
+        gbc.gridx = 4;
+        add(dolaresYanquis, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        add(aumentarUSDButton, gbc);
+
+        gbc.gridx = 4;
+        add(aumentarUSDField, gbc);
+
+
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        add(retirarUSDButton, gbc);
+
+        gbc.gridx = 4;
+        add(retirarUSDField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         add(new JLabel("Resultado:"), gbc);
 
         gbc.gridx = 1;
         add(resultField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(aumentarButton, gbc);
-
-        gbc.gridx = 1;
-        add(retirarButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -88,42 +118,59 @@ public class ConversorGUI extends JFrame {
         gbc.gridx = 1;
         add(cotizarButton, gbc);
 
-        // Adding the clear button across both columns
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 5;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 6;
         add(clearButton, gbc);
 
-        setSize(300, 250);
+        setSize(800, 350);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void applyDocumentFilters() {
+        // Apply document filters for all numeric fields
+        ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) dolaresYanquis.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) aumentarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) aumentarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) retirarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) retirarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
     }
 
     private void performOperation(String operation, JButton button) {
         try {
             button.setBackground(Color.ORANGE);
-            
-            // Convert commas to periods before parsing
-            String num1Str = pesosArgentinos.getText().replace(',', '.');
-            String num2Str = dolaresYanquis.getText().replace(',', '.');
 
-            Number num1 = new BigDecimal(num1Str);
-            Number num2 = new BigDecimal(num2Str);
-            BigDecimal result;
+            BigDecimal result = BigDecimal.ZERO; // Default result initialization
 
             switch (operation) {
-                case "aumentar":
-                    result = conversorMoneda.aumentar(num1, num2);
+                case "aumentarARS":
+                    String numARSStr = aumentarARSField.getText().replace(',', '.');
+                    Number numARS = new BigDecimal(numARSStr);
+                    result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
                     break;
-                case "retirar":
-                    result = conversorMoneda.retirar(num1, num2);
+                case "retirarARS":
+                    String numRetirarARSStr = retirarARSField.getText().replace(',', '.');
+                    Number numRetirarARS = new BigDecimal(numRetirarARSStr);
+                    result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
+                    break;
+                case "aumentarUSD":
+                    String numUSDStr = aumentarUSDField.getText().replace(',', '.');
+                    Number numUSD = new BigDecimal(numUSDStr);
+                    result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
+                    break;
+                case "retirarUSD":
+                    String numRetirarUSDStr = retirarUSDField.getText().replace(',', '.');
+                    Number numRetirarUSD = new BigDecimal(numRetirarUSDStr);
+                    result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
                     break;
                 case "convertir":
-                    result = conversorMoneda.convertir(num1, num2);
+                    // Implement conversion logic here if needed
                     break;
                 case "cotizar":
-                    result = conversorMoneda.cotizar(num1, num2);
+                    // Implement quoting logic here if needed
                     break;
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");
@@ -143,20 +190,23 @@ public class ConversorGUI extends JFrame {
         pesosArgentinos.setText("");
         dolaresYanquis.setText("");
         resultField.setText("");
-        resetButtonColors(); // Reset button colors when fields are cleared
+        aumentarARSField.setText("");
+        aumentarUSDField.setText("");
+        retirarARSField.setText("");
+        retirarUSDField.setText("");
+        resetButtonColors();
     }
 
     private void resetButtonColors() {
-        // Reset all buttons to default color
         for (Component component : getContentPane().getComponents()) {
             if (component instanceof JButton) {
-                component.setBackground(null); // Default button background
+                component.setBackground(null);
             }
         }
     }
 
-    // DocumentFilter to restrict input to numeric characters
     private class NumericDocumentFilter extends DocumentFilter {
+
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (isNumeric(string)) {
@@ -177,7 +227,7 @@ public class ConversorGUI extends JFrame {
         }
 
         private boolean isNumeric(String str) {
-            return str.matches("[0-9,.]*"); // Allows digits, commas, and periods
+            return str.matches("[0-9,.]*");
         }
     }
 
