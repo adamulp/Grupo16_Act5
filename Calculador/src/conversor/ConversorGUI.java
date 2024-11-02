@@ -19,7 +19,7 @@ public class ConversorGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create the panels and pass pasosPanel to SaldosPanel
+        // Create the panels and pass pasosPanel to SaldosPanel and CotizacionPanel
         JPanel saldoPanel = new SaldosPanel(conversorMoneda, pasosPanel);
         JPanel cotizacionPanel = new CotizacionPanel(conversorMoneda, pasosPanel);
 
@@ -44,9 +44,22 @@ public class ConversorGUI extends JFrame {
         // Add the PasosPanel at the bottom of the frame
         add(pasosPanel, BorderLayout.SOUTH);
 
+        // Create the Limpiar Campos button
+        JButton clearButton = new JButton("Limpiar Campos");
+        clearButton.addActionListener(e -> clearFields());
+
+        // Add the clear button at the bottom
+        add(clearButton, BorderLayout.NORTH); // Adjust position if necessary
+
         setSize(1080, 450); // Adjusted size for better layout
         setLocationRelativeTo(null); // Center on screen
         setVisible(true);
+    }
+
+    private void clearFields() {
+        // Clear fields in SaldosPanel and CotizacionPanel
+        // Assuming SaldosPanel and CotizacionPanel have clear methods or you can directly access their text fields
+        pasosPanel.clearPasos(); // Clear steps in PasosPanel
     }
 
     public static void main(String[] args) {
