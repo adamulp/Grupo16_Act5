@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package conversor;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,54 +11,44 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author adam
+ * @author Grupo16
  */
 public class ConversorMonedaTest {
-    
+
+    private static ConversorMoneda conversor;
+
     public ConversorMonedaTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
+        conversor = new ConversorMoneda();
+        System.out.println("Bienvenido al conversor de moneda");
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
+        System.out.println("La operación ha finalizado.");
     }
-    
+
     @Before
     public void setUp() {
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
     }
-    
+
     @After
     public void tearDown() {
+        System.out.println("Prueba finalizada, campos en 0");
     }
 
-    /**
-     * Test of main method, of class ConversorMoneda.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        ConversorMoneda.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of aumentar method, of class ConversorMoneda.
-     */
     @Test
     public void testAumentar() {
-        System.out.println("aumentar");
-        Number a = null;
-        Number b = null;
-        BigDecimal expResult = null;
-        BigDecimal result = ConversorMoneda.aumentar(a, b);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Test aumentar");
+        BigDecimal a = new BigDecimal("10.00");
+        BigDecimal b = new BigDecimal("5.00");
+        BigDecimal expected = new BigDecimal("15.00");
+        BigDecimal result = conversor.aumentar(a, b);
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
     }
 
     /**
@@ -69,30 +56,24 @@ public class ConversorMonedaTest {
      */
     @Test
     public void testRetirar() {
-        System.out.println("retirar");
-        Number a = null;
-        Number b = null;
-        BigDecimal expResult = null;
-        BigDecimal result = ConversorMoneda.retirar(a, b);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Test retirar");
+        BigDecimal a = new BigDecimal("10.00");
+        BigDecimal b = new BigDecimal("5.00");
+        BigDecimal expected = new BigDecimal("5.00");
+        BigDecimal result = conversor.retirar(a, b);
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
     }
 
-    /**
-     * Test of cotizar method, of class ConversorMoneda.
-     */
+    // Additional tests for cotizar and convertir can be added here...
+    
     @Test
     public void testCotizar() {
-        System.out.println("cotizar");
-        Number a = null;
-        Number b = null;
-        ConversorMoneda instance = new ConversorMoneda();
-        BigDecimal expResult = null;
-        BigDecimal result = instance.cotizar(a, b);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Test cotizar");
+        BigDecimal a = new BigDecimal("1200.00");
+        BigDecimal b = new BigDecimal("1.00");
+        BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
+        BigDecimal result = conversor.cotizar(a, b);
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
     }
 
     /**
@@ -100,15 +81,11 @@ public class ConversorMonedaTest {
      */
     @Test
     public void testConvertir() {
-        System.out.println("convertir");
-        Number a = null;
-        Number b = null;
-        ConversorMoneda instance = new ConversorMoneda();
-        BigDecimal expResult = null;
-        BigDecimal result = instance.convertir(a, b);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Test convertir");
+        BigDecimal a = new BigDecimal("1200.00");
+        BigDecimal b = new BigDecimal("1.00"); // Example conversion rate
+        BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
+        BigDecimal result = conversor.convertir(a, b);
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
     }
-    
 }
