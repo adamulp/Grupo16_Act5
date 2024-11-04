@@ -23,13 +23,13 @@ import org.junit.runners.Parameterized.Parameters;
  * @author juanj
  */
 @RunWith(value=Parameterized.class) 
-public class autoTest {
-    static auto instance;
-    //public autoTest() {   }
+public class AutoTest {
+    static Auto instance;
+    //public AutoTest() {   }
     static float expResult;  // esperado
         
-    public autoTest(String marca, float precioBase, float expResult) {
-        instance = new auto(marca, precioBase);
+    public AutoTest(String marca, float precioBase, float expResult) {
+        instance = new Auto(marca, precioBase);
         this.expResult = expResult;
     }
    
@@ -45,8 +45,8 @@ public class autoTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("BeforeClass...");
-        //instance = new auto("Audi R8", 5600000);
-        auto.impuesto = 20f;
+        //instance = new Auto("Audi R8", 5600000);
+        Auto.impuesto = 20f;
     }
     
     @AfterClass
@@ -65,14 +65,14 @@ public class autoTest {
     }
 
     /**
-     * Test of precioFinal method, of class auto.
+     * Test of precioFinal method, of class Auto.
      */
     @Test
     public void testPrecioFinal() throws Exception {
         System.out.println("precio Alta Gama");
         float descuento = 10.0F;
-       // auto instance = new auto("Audi R8", 5600000);
-       // auto.impuesto = 20f;       
+       // Auto instance = new Auto("Audi R8", 5600000);
+       // Auto.impuesto = 20f;       
        // float expResult = 6048000;  // esperado
         float result = instance.precioFinal(descuento); // real
         assertEquals(expResult, result, 0.0002);
@@ -81,8 +81,8 @@ public class autoTest {
     public void testPrecioFinalBarato() throws Exception {
         System.out.println("precio Vehiculo convencional");
         float descuento = 10.0F;
-      // auto instance = new auto("Fiat Mobi", 1200000);
-      // auto.impuesto = 20f;
+      // Auto instance = new Auto("Fiat Mobi", 1200000);
+      // Auto.impuesto = 20f;
       // float expResult = 1440000;  // esperado
         float result = instance.precioFinal(descuento); // real
         assertEquals(expResult, result, 0.0001);   // millonesima diferencia
@@ -91,8 +91,8 @@ public class autoTest {
     public void testExepcion() throws Exception  {
         System.out.println("Pueba de exeption en descuento");
         float descuento = 200.0F;
-      // auto instance = new auto("Ford Fiesta", 1800000);
-      // auto.impuesto = 20f;
+      // Auto instance = new Auto("Ford Fiesta", 1800000);
+      // Auto.impuesto = 20f;
         instance.precioFinal(descuento);
     }
     
