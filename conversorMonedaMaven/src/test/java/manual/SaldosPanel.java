@@ -1,6 +1,6 @@
 package manual;
 
-import conversor.ConversorMoneda;
+import conversor.Conversor;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
@@ -16,10 +16,10 @@ public class SaldosPanel extends JPanel {
     private JTextField retirarUSDField;
     private JTextField resultARSField;
     private JTextField resultUSDField;
-    private ConversorMoneda conversorMoneda;
+    private Conversor conversorMoneda;
     private PasosPanel pasosPanel;
 
-    public SaldosPanel(ConversorMoneda conversorMoneda, PasosPanel pasosPanel) {
+    public SaldosPanel(Conversor conversorMoneda, PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
         this.pasosPanel = pasosPanel;
         createUI();

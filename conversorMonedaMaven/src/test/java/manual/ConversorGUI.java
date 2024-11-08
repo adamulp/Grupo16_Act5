@@ -1,18 +1,18 @@
 package manual;
 
-import conversor.ConversorMoneda;
+import conversor.Conversor;
 import javax.swing.*;
 import java.awt.*;
 
 public class ConversorGUI extends JFrame {
 
-    private ConversorMoneda conversorMoneda;
+    private Conversor conversorMoneda;
     private PasosPanel pasosPanel;
     private SaldosPanel saldoPanel;
     private CotizacionPanel cotizacionPanel;
 
     public ConversorGUI() {
-        conversorMoneda = new ConversorMoneda();
+        conversorMoneda = new Conversor();
         pasosPanel = new PasosPanel();
         saldoPanel = new SaldosPanel(conversorMoneda, pasosPanel);
         cotizacionPanel = new CotizacionPanel(conversorMoneda, pasosPanel);

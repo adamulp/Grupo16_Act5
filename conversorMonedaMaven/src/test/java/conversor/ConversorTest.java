@@ -13,16 +13,16 @@ import static org.junit.Assert.*;
  *
  * @author Grupo16
  */
-public class ConversorMonedaTest {
+public class ConversorTest {
 
-    private static ConversorMoneda conversor;
+    private static Conversor conversor;
 
-    public ConversorMonedaTest() {
+    public ConversorTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
-        conversor = new ConversorMoneda();
+        conversor = new Conversor();
         System.out.println("Bienvenido al conversor de moneda");
     }
 

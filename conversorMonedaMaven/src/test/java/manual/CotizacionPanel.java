@@ -1,6 +1,6 @@
 package manual;
 
-import conversor.ConversorMoneda;
+import conversor.Conversor;
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
@@ -13,10 +13,10 @@ public class CotizacionPanel extends JPanel {
     private JTextField cotizacionUSDARSField;
     private JTextField montoARS;
     private JTextField montoUSD;
-    private ConversorMoneda conversorMoneda;
+    private Conversor conversorMoneda;
     private PasosPanel pasosPanel;
 
-    public CotizacionPanel(ConversorMoneda conversorMoneda, 
+    public CotizacionPanel(Conversor conversorMoneda, 
             PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
         this.pasosPanel = pasosPanel;

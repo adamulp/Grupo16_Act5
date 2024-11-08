@@ -37,14 +37,14 @@ public class DolaritosTest {
         System.out.println("Testing cotizar with ARS: " + cotizarARS + " and USD: " + cotizarUSD);
         if (resultadoEsperado.equals("error")) {
             try {
-                ConversorMoneda cotizador = new ConversorMoneda();
+                Conversor cotizador = new Conversor();
                 cotizador.cotizar(cotizarARS, cotizarUSD);
                 fail("Expected an ArithmeticException to be thrown.");
             } catch (ArithmeticException e) {
                 System.out.println("Caught expected ArithmeticException: " + e.getMessage());
             }
         } else {
-            ConversorMoneda cotizador = new ConversorMoneda();
+            Conversor cotizador = new Conversor();
             BigDecimal result = cotizador.cotizar(cotizarARS, cotizarUSD);
             assertEquals(new BigDecimal(resultadoEsperado), result);
         }

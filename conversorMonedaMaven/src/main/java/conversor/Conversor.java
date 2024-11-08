@@ -8,15 +8,15 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-public class ConversorMoneda {
+public class Conversor {
     private static final int COTIZAR_SCALE = 10;
     private static final int CONVERSION_SCALE = 3;
 
-    public ConversorMoneda() {
+    public Conversor() {
     }
 
     public static void main(String[] args) {
-        ConversorMoneda calc = new ConversorMoneda();
+        Conversor calc = new Conversor();
         BigDecimal result1 = calc.aumentar(5, 10);
         BigDecimal result2 = calc.aumentar(5.5, 4.5);
         BigDecimal result3 = calc.aumentar(new BigDecimal("10.5"), new BigDecimal("5.5"));

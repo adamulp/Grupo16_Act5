@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author adam
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({conversor.DolaritosTest.class, conversor.ConversorMonedaTest.class, conversor.CotizacionTest.class})
+@Suite.SuiteClasses({conversor.DolaritosTest.class, conversor.ConversorTest.class, conversor.CotizacionTest.class})
 public class MiCoinSuite {
 
     @BeforeClass

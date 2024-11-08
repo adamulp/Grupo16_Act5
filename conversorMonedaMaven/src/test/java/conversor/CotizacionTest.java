@@ -5,10 +5,10 @@ import org.junit.Test;
 
 public class CotizacionTest {
 
-    private ConversorMoneda conversor;
+    private Conversor conversor;
 
     public CotizacionTest() {
-        conversor = new ConversorMoneda();
+        conversor = new Conversor();
     }
 
     @Test(expected = ArithmeticException.class)
