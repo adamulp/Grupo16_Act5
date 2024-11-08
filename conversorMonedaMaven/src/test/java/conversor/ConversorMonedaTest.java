@@ -48,12 +48,9 @@ public class ConversorMonedaTest {
         BigDecimal b = new BigDecimal("5.00");
         BigDecimal expected = new BigDecimal("15.00");
         BigDecimal result = conversor.aumentar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
     }
 
-    /**
-     * Test of retirar method, of class ConversorMoneda.
-     */
     @Test
     public void testRetirar() {
         System.out.println("Test retirar");
@@ -61,24 +58,19 @@ public class ConversorMonedaTest {
         BigDecimal b = new BigDecimal("5.00");
         BigDecimal expected = new BigDecimal("5.00");
         BigDecimal result = conversor.retirar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
     }
-
-    // Additional tests for cotizar and convertir can be added here...
     
     @Test
     public void testCotizar() {
         System.out.println("Test cotizar");
         BigDecimal a = new BigDecimal("1200.00");
         BigDecimal b = new BigDecimal("1.00");
-        BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
+        BigDecimal expected = new BigDecimal("1200.00");
         BigDecimal result = conversor.cotizar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
     }
 
-    /**
-     * Test of convertir method, of class ConversorMoneda.
-     */
     @Test
     public void testConvertir() {
         System.out.println("Test convertir");
@@ -86,6 +78,6 @@ public class ConversorMonedaTest {
         BigDecimal b = new BigDecimal("1.00"); // Example conversion rate
         BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
         BigDecimal result = conversor.convertir(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP)); // Adjust the scale as needed
+        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
     }
 }
