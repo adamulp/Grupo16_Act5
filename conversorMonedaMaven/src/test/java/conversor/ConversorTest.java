@@ -45,9 +45,9 @@ public class ConversorTest {
     @Test
     public void testAumentar() {
         System.out.println("Test aumentar");
-        BigDecimal a = new BigDecimal("10.000");
-        BigDecimal b = new BigDecimal("5.000");
-        BigDecimal expected = new BigDecimal("15.000");
+        BigDecimal a = new BigDecimal("0.000");
+        BigDecimal b = new BigDecimal("0.001");
+        BigDecimal expected = new BigDecimal("0.001");
         BigDecimal result = conversor.aumentar(a, b);
         assertEquals(expected, result.setScale(
                 3, 
@@ -57,9 +57,9 @@ public class ConversorTest {
     @Test
     public void testRetirar() {
         System.out.println("Test retirar");
-        BigDecimal a = new BigDecimal("10.000");
-        BigDecimal b = new BigDecimal("5.000");
-        BigDecimal expected = new BigDecimal("5.000");
+        BigDecimal a = new BigDecimal("1.000");
+        BigDecimal b = new BigDecimal("0.001");
+        BigDecimal expected = new BigDecimal("0.999");
         BigDecimal result = conversor.retirar(a, b);
         assertEquals(expected, result.setScale(
                 3, 
@@ -82,8 +82,8 @@ public class ConversorTest {
     public void testConvertir() {
         System.out.println("Test convertir");
         BigDecimal a = new BigDecimal("1200.000");
-        BigDecimal b = new BigDecimal("1.000"); // Example conversion rate
-        BigDecimal expected = new BigDecimal("1200.000"); // Example value, adjust as needed
+        BigDecimal b = new BigDecimal("1.000");
+        BigDecimal expected = new BigDecimal("1200.000");
         BigDecimal result = conversor.convertir(a, b);
         assertEquals(expected, result.setScale(
                 3, 
