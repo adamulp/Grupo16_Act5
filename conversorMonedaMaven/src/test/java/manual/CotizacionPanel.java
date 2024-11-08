@@ -196,7 +196,7 @@ public class CotizacionPanel extends JPanel {
     private void resetButtonColors() {
         for (Component component : getComponents()) {
             if (component instanceof JButton) {
-                component.setBackground(null); // Reset to default color
+                component.setBackground(null);
             }
         }
     }
