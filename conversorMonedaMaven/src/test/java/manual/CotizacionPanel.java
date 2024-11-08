@@ -4,7 +4,6 @@ import conversor.ConversorMoneda;
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class CotizacionPanel extends JPanel {
 

@@ -2,7 +2,6 @@ package conversor;
 
 import java.math.BigDecimal;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class CotizacionTest {
 
