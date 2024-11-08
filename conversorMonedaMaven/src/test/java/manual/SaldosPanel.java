@@ -143,12 +143,18 @@ public class SaldosPanel extends JPanel {
 
     private void applyDocumentFilters() {
         // Apply document filters for all numeric fields
-        ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) aumentarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) retirarARSField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) dolaresYanquis.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) aumentarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
-        ((AbstractDocument) retirarUSDField.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+        ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
+        ((AbstractDocument) aumentarARSField.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
+        ((AbstractDocument) retirarARSField.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
+        ((AbstractDocument) dolaresYanquis.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
+        ((AbstractDocument) aumentarUSDField.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
+        ((AbstractDocument) retirarUSDField.getDocument()).setDocumentFilter(
+                new NumericDocumentFilter());
     }
 
     private void performOperation(String operation) {
@@ -156,64 +162,139 @@ public class SaldosPanel extends JPanel {
             BigDecimal result = BigDecimal.ZERO;
 
             switch (operation) {
+                
                 case "aumentarARS":
-                    String numARSStr = aumentarARSField.getText().replace(',', '.');
+                    String numARSStr = aumentarARSField.getText().
+                            replace(',', '.');
                     Number numARS = new BigDecimal(numARSStr);
-                    result = conversorMoneda.aumentar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numARS);
-                    resultARSField.setText(result.toString()); // Set result for ARS
-                    pasosPanel.addPaso("Aumentar ARS: " + numARSStr); // Log step
+                    
+                    result = conversorMoneda.aumentar(pesosArgentinos.getText().
+                            isEmpty() ? BigDecimal.ZERO : new BigDecimal(
+                                    pesosArgentinos.getText().
+                                            replace(
+                                                    ',', '.')),
+                                                    numARS);
+                    
+                    resultARSField.setText(result.toString());
+                    pasosPanel.addPaso("Aumentar ARS: " + numARSStr);
                     break;
+                    
                 case "retirarARS":
-                    String numRetirarARSStr = retirarARSField.getText().replace(',', '.');
+                    String numRetirarARSStr = retirarARSField.getText().
+                            replace(',', '.');
+                    
                     Number numRetirarARS = new BigDecimal(numRetirarARSStr);
-                    result = conversorMoneda.retirar(pesosArgentinos.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesosArgentinos.getText().replace(',', '.')), numRetirarARS);
-                    resultARSField.setText(result.toString()); // Set result for ARS
-                    pasosPanel.addPaso("Retirar ARS: " + numRetirarARSStr); // Log step
+                    
+                    result = conversorMoneda.retirar(pesosArgentinos.getText().
+                            isEmpty() ? BigDecimal.ZERO : new BigDecimal(
+                                    pesosArgentinos.getText().
+                                            replace(
+                                                    ',', 
+                                                    '.')), 
+                                                    numRetirarARS);
+                    
+                    resultARSField.setText(result.toString());
+                    
+                    pasosPanel.addPaso("Retirar ARS: " + numRetirarARSStr);
                     break;
+                    
                 case "aumentarUSD":
-                    String numUSDStr = aumentarUSDField.getText().replace(',', '.');
+                    String numUSDStr = aumentarUSDField.getText().
+                            replace(',', '.');
                     Number numUSD = new BigDecimal(numUSDStr);
-                    result = conversorMoneda.aumentar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numUSD);
-                    resultUSDField.setText(result.toString()); // Set result for USD
-                    pasosPanel.addPaso("Aumentar USD: " + numUSDStr); // Log step
+                    result = conversorMoneda.aumentar(dolaresYanquis.
+                            getText().
+                            isEmpty() ? BigDecimal.ZERO : new BigDecimal(
+                                    dolaresYanquis.getText().
+                                            replace(
+                                                    ',', 
+                                                    '.')), 
+                                                    numUSD);
+                    
+                    resultUSDField.setText(result.toString());
+                    pasosPanel.addPaso("Aumentar USD: " + numUSDStr);
                     break;
+                    
                 case "retirarUSD":
-                    String numRetirarUSDStr = retirarUSDField.getText().replace(',', '.');
+                    String numRetirarUSDStr = retirarUSDField.getText().
+                            replace(',', '.');
+                    
                     Number numRetirarUSD = new BigDecimal(numRetirarUSDStr);
-                    result = conversorMoneda.retirar(dolaresYanquis.getText().isEmpty() ? BigDecimal.ZERO : new BigDecimal(dolaresYanquis.getText().replace(',', '.')), numRetirarUSD);
-                    resultUSDField.setText(result.toString()); // Set result for USD
-                    pasosPanel.addPaso("Retirar USD: " + numRetirarUSDStr); // Log step
+                    
+                    result = conversorMoneda.retirar(dolaresYanquis.
+                            getText().
+                            isEmpty() ? BigDecimal.ZERO : new BigDecimal(
+                                    dolaresYanquis.getText().replace(
+                                            ',', 
+                                            '.')), 
+                                            numRetirarUSD);
+                    
+                    resultUSDField.setText(result.toString());
+                    pasosPanel.addPaso("Retirar USD: " + numRetirarUSDStr);
                     break;
+                    
                 default:
                     throw new UnsupportedOperationException("Operación no soportada");
             }
+            
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Por favor, ingrese números válidos.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            
         } catch (ArithmeticException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Error: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private class NumericDocumentFilter extends DocumentFilter {
 
         @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        public void insertString(FilterBypass fb,
+                int offset,
+                String string,
+                AttributeSet attr)
+                throws BadLocationException {
             if (isNumeric(string)) {
-                super.insertString(fb, offset, string.replace(',', '.'), attr);
+                super.
+                        insertString(fb,
+                                offset,
+                                string.
+                                        replace(',',
+                                                '.'),
+                                attr);
             }
         }
 
         @Override
-        public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attr) throws BadLocationException {
+        public void replace(FilterBypass fb,
+                int offset,
+                int length,
+                String string,
+                AttributeSet attr) throws BadLocationException {
             if (isNumeric(string)) {
-                super.replace(fb, offset, length, string.replace(',', '.'), attr);
+                super.replace(fb,
+                        offset,
+                        length,
+                        string.
+                                replace(',', '.'), attr);
             }
         }
 
         @Override
-        public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+        public void remove(FilterBypass fb, int offset, int length)
+                throws BadLocationException {
             super.remove(fb, offset, length);
         }
 
