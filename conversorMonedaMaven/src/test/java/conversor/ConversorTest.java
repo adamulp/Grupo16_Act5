@@ -33,7 +33,8 @@ public class ConversorTest {
 
     @Before
     public void setUp() {
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+        System.out.println(Thread.currentThread().getStackTrace()[1].
+                getMethodName());
     }
 
     @After
@@ -48,7 +49,9 @@ public class ConversorTest {
         BigDecimal b = new BigDecimal("5.00");
         BigDecimal expected = new BigDecimal("15.00");
         BigDecimal result = conversor.aumentar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
+        assertEquals(expected, result.setScale(
+                2, 
+                RoundingMode.HALF_UP));
     }
 
     @Test
@@ -58,7 +61,9 @@ public class ConversorTest {
         BigDecimal b = new BigDecimal("5.00");
         BigDecimal expected = new BigDecimal("5.00");
         BigDecimal result = conversor.retirar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
+        assertEquals(expected, result.setScale(
+                2, 
+                RoundingMode.HALF_UP));
     }
     
     @Test
@@ -68,7 +73,9 @@ public class ConversorTest {
         BigDecimal b = new BigDecimal("1.00");
         BigDecimal expected = new BigDecimal("1200.00");
         BigDecimal result = conversor.cotizar(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
+        assertEquals(expected, result.setScale(
+                2, 
+                RoundingMode.HALF_UP));
     }
 
     @Test
@@ -78,6 +85,8 @@ public class ConversorTest {
         BigDecimal b = new BigDecimal("1.00"); // Example conversion rate
         BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
         BigDecimal result = conversor.convertir(a, b);
-        assertEquals(expected, result.setScale(2, RoundingMode.HALF_UP));
+        assertEquals(expected, result.setScale(
+                2, 
+                RoundingMode.HALF_UP));
     }
 }

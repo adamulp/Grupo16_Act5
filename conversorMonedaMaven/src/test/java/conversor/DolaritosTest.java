@@ -17,7 +17,9 @@ public class DolaritosTest {
     private BigDecimal cotizarUSD;
     private String resultadoEsperado;
 
-    public DolaritosTest(BigDecimal cotizarARS, BigDecimal cotizarUSD, String expectedResult) {
+    public DolaritosTest(BigDecimal cotizarARS,
+            BigDecimal cotizarUSD,
+            String expectedResult) {
         this.cotizarARS = cotizarARS;
         this.cotizarUSD = cotizarUSD;
         this.resultadoEsperado = expectedResult;
@@ -34,14 +36,22 @@ public class DolaritosTest {
 
     @Test
     public void testCotizarCero() {
-        System.out.println("Testing cotizar with ARS: " + cotizarARS + " and USD: " + cotizarUSD);
+        System.out.println("Testing cotizar with ARS: "
+                + cotizarARS
+                + " and USD: "
+                + cotizarUSD);
+        
         if (resultadoEsperado.equals("error")) {
             try {
                 Conversor cotizador = new Conversor();
-                cotizador.cotizar(cotizarARS, cotizarUSD);
+                cotizador.cotizar(cotizarARS, 
+                        cotizarUSD);
+                
                 fail("Expected an ArithmeticException to be thrown.");
+                
             } catch (ArithmeticException e) {
-                System.out.println("Caught expected ArithmeticException: " + e.getMessage());
+                System.out.println("Caught expected ArithmeticException: "
+                        + e.getMessage());
             }
         } else {
             Conversor cotizador = new Conversor();
