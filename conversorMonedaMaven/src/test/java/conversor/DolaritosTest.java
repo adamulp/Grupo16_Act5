@@ -27,7 +27,7 @@ public class DolaritosTest {
     public static Collection<Object[]> tomarDatos() {
         return Arrays.asList(new Object[][] {
             { new BigDecimal("180000"), new BigDecimal("1500"), "120" },
-            { new BigDecimal("120000"), new BigDecimal("0"), "error" }, // Expecting an exception
+            { new BigDecimal("120000"), new BigDecimal("0"), "error" },
             { new BigDecimal("100000"), new BigDecimal("-900"), "111.11" }
         });
     }
