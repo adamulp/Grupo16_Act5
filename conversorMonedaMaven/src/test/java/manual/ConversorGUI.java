@@ -30,7 +30,6 @@ public class ConversorGUI extends JFrame {
 
         gbc.fill = GridBagConstraints.BOTH;
 
-        // Add saldoPanel
         gbc.gridx = 0;
         gbc.gridy = 0;
         mainPanel.add(saldoPanel, gbc);

@@ -142,7 +142,6 @@ public class SaldosPanel extends JPanel {
     }
 
     private void applyDocumentFilters() {
-        // Apply document filters for all numeric fields
         ((AbstractDocument) pesosArgentinos.getDocument()).setDocumentFilter(
                 new NumericDocumentFilter());
         ((AbstractDocument) aumentarARSField.getDocument()).setDocumentFilter(

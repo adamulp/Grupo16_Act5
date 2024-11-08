@@ -17,7 +17,8 @@ public class CotizacionPanel extends JPanel {
     private ConversorMoneda conversorMoneda;
     private PasosPanel pasosPanel;
 
-    public CotizacionPanel(ConversorMoneda conversorMoneda, PasosPanel pasosPanel) {
+    public CotizacionPanel(ConversorMoneda conversorMoneda, 
+            PasosPanel pasosPanel) {
         this.conversorMoneda = conversorMoneda;
         this.pasosPanel = pasosPanel;
         createUI();
@@ -41,7 +42,9 @@ public class CotizacionPanel extends JPanel {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("Cotizar", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Cotizar",
+                SwingConstants.CENTER);
+        
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         
         JSeparator separator = new JSeparator();
@@ -93,7 +96,6 @@ public class CotizacionPanel extends JPanel {
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Cotización Inputs
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(new JLabel("               ARS:"), gbc);
@@ -114,12 +116,11 @@ public class CotizacionPanel extends JPanel {
         gbc.gridx = 1;
         add(cotizacionARSUSDField, gbc);
 
-        gbc.gridx = 2; // Adjust to align with the other USD label
+        gbc.gridx = 2;
         add(new JLabel("                       USD/ARS:"), gbc);
         gbc.gridx = 3;
         add(cotizacionUSDARSField, gbc);
 
-        // Conversion Inputs
         gbc.gridx = 0;
         gbc.gridy = 3;
         add(new JLabel("Monto ARS:"), gbc);
@@ -139,28 +140,47 @@ public class CotizacionPanel extends JPanel {
 
     private void performCotizacion() {
         try {
-            String cotizarARSStr = cotizarARSField.getText().replace(',', '.');
-            String cotizarUSDStr = cotizarUSDField.getText().replace(',', '.');
+            String cotizarARSStr = cotizarARSField.getText().
+                    replace(',', '.');
+            
+            String cotizarUSDStr = cotizarUSDField.getText().
+                    replace(',', '.');
 
             BigDecimal cotizarARS = new BigDecimal(cotizarARSStr);
             BigDecimal cotizarUSD = new BigDecimal(cotizarUSDStr);
 
             // Use ConversorMoneda methods
-            BigDecimal cotizacionUSDARS = conversorMoneda.cotizar(cotizarARS, cotizarUSD);
-            BigDecimal cotizacionARSUSD = conversorMoneda.cotizar(cotizarUSD, cotizarARS);
+            BigDecimal cotizacionUSDARS = conversorMoneda.cotizar(
+                    cotizarARS, cotizarUSD);
+            
+            BigDecimal cotizacionARSUSD = conversorMoneda.cotizar(
+                    cotizarUSD, cotizarARS);
+            
             cotizacionARSUSDField.setText(cotizacionARSUSD.toString());
             cotizacionUSDARSField.setText(cotizacionUSDARS.toString());
 
-            // Log the cotization action
-            pasosPanel.addPaso("Cotizar: " + cotizarARSStr + " ARS con " + cotizarUSDStr + " USD");
+            pasosPanel.addPaso("Cotizar: "
+                    + cotizarARSStr
+                    + " ARS con "
+                    + cotizarUSDStr
+                    + " USD");
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para cotización.", "Error",
+            JOptionPane.showMessageDialog(this, 
+                    "Por favor, ingrese números válidos para cotización.", 
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
+            
         } catch (ArithmeticException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Error: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -169,27 +189,52 @@ public class CotizacionPanel extends JPanel {
             BigDecimal result;
 
             if (currency.equals("USD")) {
-                BigDecimal cotizacion = new BigDecimal(cotizacionARSUSDField.getText());
-                BigDecimal amountToConvert = new BigDecimal(montoARS.getText());
-                result = conversorMoneda.convertir(amountToConvert, cotizacion); // Use ConversorMoneda method
+                BigDecimal cotizacion = new BigDecimal(
+                        cotizacionARSUSDField.getText());
+                
+                BigDecimal amountToConvert = new BigDecimal(
+                        montoARS.getText());
+                
+                result = conversorMoneda.convertir(
+                        amountToConvert, cotizacion);
+                
                 montoUSD.setText(result.toString());
-//                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a USD", JOptionPane.INFORMATION_MESSAGE);
-                pasosPanel.addPaso("Convertir ARS a USD: " + amountToConvert + " * " + cotizacion); // Log step
+                pasosPanel.addPaso("Convertir ARS a USD: "
+                        + amountToConvert
+                        + " * " + cotizacion);
+                
             } else if (currency.equals("ARS")) {
-                BigDecimal cotizacion = new BigDecimal(cotizacionUSDARSField.getText());
-                BigDecimal amountToConvert = new BigDecimal(montoUSD.getText());
-                result = conversorMoneda.convertir(amountToConvert, cotizacion); // Use ConversorMoneda method
+                BigDecimal cotizacion = new BigDecimal(
+                        cotizacionUSDARSField.getText());
+                
+                BigDecimal amountToConvert = new BigDecimal(
+                        montoUSD.getText());
+                
+                result = conversorMoneda.convertir(
+                        amountToConvert, cotizacion);
+                
                 montoARS.setText(result.toString());
-//                JOptionPane.showMessageDialog(this, "Resultado: " + result.toString(), "Conversión a ARS", JOptionPane.INFORMATION_MESSAGE);
-                pasosPanel.addPaso("Convertir USD a ARS: " + amountToConvert + " * " + cotizacion); // Log step
+                pasosPanel.addPaso("Convertir USD a ARS: "
+                        + amountToConvert + " * " + cotizacion);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese números válidos para la conversión.", "Error",
+            JOptionPane.showMessageDialog(this, 
+                    "Por favor, "
+                            + "ingrese números válidos para la conversión.",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
+            
         } catch (ArithmeticException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this, "Error: "
+                            + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Error: "
+                            + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
