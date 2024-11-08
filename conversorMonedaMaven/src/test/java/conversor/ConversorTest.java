@@ -45,48 +45,48 @@ public class ConversorTest {
     @Test
     public void testAumentar() {
         System.out.println("Test aumentar");
-        BigDecimal a = new BigDecimal("10.00");
-        BigDecimal b = new BigDecimal("5.00");
-        BigDecimal expected = new BigDecimal("15.00");
+        BigDecimal a = new BigDecimal("10.000");
+        BigDecimal b = new BigDecimal("5.000");
+        BigDecimal expected = new BigDecimal("15.000");
         BigDecimal result = conversor.aumentar(a, b);
         assertEquals(expected, result.setScale(
-                2, 
+                3, 
                 RoundingMode.HALF_UP));
     }
 
     @Test
     public void testRetirar() {
         System.out.println("Test retirar");
-        BigDecimal a = new BigDecimal("10.00");
-        BigDecimal b = new BigDecimal("5.00");
-        BigDecimal expected = new BigDecimal("5.00");
+        BigDecimal a = new BigDecimal("10.000");
+        BigDecimal b = new BigDecimal("5.000");
+        BigDecimal expected = new BigDecimal("5.000");
         BigDecimal result = conversor.retirar(a, b);
         assertEquals(expected, result.setScale(
-                2, 
+                3, 
                 RoundingMode.HALF_UP));
     }
     
     @Test
     public void testCotizar() {
         System.out.println("Test cotizar");
-        BigDecimal a = new BigDecimal("1200.00");
-        BigDecimal b = new BigDecimal("1.00");
-        BigDecimal expected = new BigDecimal("1200.00");
+        BigDecimal a = new BigDecimal("1200.000");
+        BigDecimal b = new BigDecimal("1.000");
+        BigDecimal expected = new BigDecimal("1200.000");
         BigDecimal result = conversor.cotizar(a, b);
         assertEquals(expected, result.setScale(
-                2, 
+                3, 
                 RoundingMode.HALF_UP));
     }
 
     @Test
     public void testConvertir() {
         System.out.println("Test convertir");
-        BigDecimal a = new BigDecimal("1200.00");
-        BigDecimal b = new BigDecimal("1.00"); // Example conversion rate
-        BigDecimal expected = new BigDecimal("1200.00"); // Example value, adjust as needed
+        BigDecimal a = new BigDecimal("1200.000");
+        BigDecimal b = new BigDecimal("1.000"); // Example conversion rate
+        BigDecimal expected = new BigDecimal("1200.000"); // Example value, adjust as needed
         BigDecimal result = conversor.convertir(a, b);
         assertEquals(expected, result.setScale(
-                2, 
+                3, 
                 RoundingMode.HALF_UP));
     }
 }
