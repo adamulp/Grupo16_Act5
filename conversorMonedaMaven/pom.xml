@@ -54,7 +54,6 @@
             </dependencies>
         </profile>
 
-        <!-- Profile for JDK 21 -->
         <profile>
             <id>jdk21</id>
             <activation>
@@ -69,6 +68,40 @@
                         <configuration>
                             <source>21</source>
                             <target>21</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                    <version>5.6.0</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                    <version>5.6.0</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        
+        <profile>
+            <id>jdk22</id>
+            <activation>
+                <jdk>22</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <source>22</source>
+                            <target>22</target>
                         </configuration>
                     </plugin>
                 </plugins>
