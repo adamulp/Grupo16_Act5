@@ -19,7 +19,9 @@ public class Conversor {
         Conversor calc = new Conversor();
         BigDecimal result1 = calc.aumentar(5, 10);
         BigDecimal result2 = calc.aumentar(5.5, 4.5);
-        BigDecimal result3 = calc.aumentar(new BigDecimal("10.5"), new BigDecimal("5.5"));
+        BigDecimal result3 = calc.aumentar(
+                new BigDecimal("10.5"),
+                new BigDecimal("5.5"));
 
         System.out.println("Sum (Integer): " + result1);
         System.out.println("Sum (Double): " + result2);
@@ -52,10 +54,17 @@ public class Conversor {
         if (divisor.compareTo(BigDecimal.ZERO) == 0) {
             throw new ArithmeticException("Division by zero");
         }
-        return toBigDecimal(a).divide(divisor, COTIZAR_SCALE, RoundingMode.HALF_UP); // Set scale here
+        return toBigDecimal(a).divide(
+                divisor, 
+                COTIZAR_SCALE, 
+                RoundingMode.HALF_UP);
     }
 
     public BigDecimal convertir(Number a, Number b) {
-        return toBigDecimal(a).multiply(toBigDecimal(b)).setScale(CONVERSION_SCALE, RoundingMode.HALF_UP); // Set scale here
+        return toBigDecimal(a).
+                multiply(
+                        toBigDecimal(b)).
+                                        setScale(CONVERSION_SCALE, 
+                                                RoundingMode.HALF_UP);
     }
 }

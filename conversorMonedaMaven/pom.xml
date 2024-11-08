@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>grupo16.conversor.ConversorMoneda</exec.mainClass>
+        <exec.mainClass>grupo16.conversor.Conversor</exec.mainClass>
     </properties>
 
     <profiles>
